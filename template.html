@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Global News Briefing â {{DATE_LONG}}</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  /* ============================================
+     LIGHT MODE (default)
+     ============================================ */
+  :root {
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --text-secondary: #3d3d5c;
+    --muted: #555570;
+    --accent: #c0392b;
+    --accent2: #2c3e50;
+    --border: #e2e4e8;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.1);
+    --header-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    --top-story-bg: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+    --top-story-border: #fde2e2;
+    --source-color: #888;
+    --source-link: #6b7c8d;
+    --source-dot: #bdc3c7;
+    --footer-color: #aaa;
+    --toggle-bg: rgba(255,255,255,0.12);
+    --toggle-hover: rgba(255,255,255,0.22);
+    --section-title: #2c3e50;
+    --chip-bg: #ffffff;
+    --filter-bg: #ffffff;
+    --filter-active-text: #ffffff;
+    --filter-inactive-text: #555570;
+    --filter-inactive-bg: transparent;
+    --filter-bar-bg: #f4f5f7;
+    /* Tag colors */
+    --tag-conflict: #e74c3c;
+    --tag-science: #2980b9;
+    --tag-economy: #27ae60;
+    --tag-environment: #16a085;
+    --tag-diplomacy: #8e44ad;
+    --tag-space: #34495e;
+    --tag-policy: #d35400;
+    --tag-ukraine: #f39c12;
+    --tag-health: #e84393;
+    --tag-tech: #0984e3;
+    --tag-society: #6c5ce7;
+    --tag-energy: #e17055;
+    --tag-security: #636e72;
+    --tag-romania: #002B7F;
+    --tag-reddit: #ff4500;
+  }
+
+  /* ============================================
+     DARK MODE
+     ============================================ */
+  [data-theme="dark"] {
+    --bg: #101018;
+    --card: #1a1a28;
+    --text: #e4e2ee;
+    --text-secondary: #b0b0c8;
+    --muted: #9090aa;
+    --accent: #e74c3c;
+    --accent2: #7fb3d8;
+    --border: #28283a;
+    --shadow: 0 1px 3px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+    --header-bg: linear-gradient(135deg, #08080f 0%, #0e0e20 50%, #081428 100%);
+    --top-story-bg: linear-gradient(135deg, #1f1520 0%, #1a1a28 100%);
+    --top-story-border: #352030;
+    --source-color: #606078;
+    --source-link: #7090a8;
+    --source-dot: #404058;
+    --footer-color: #505068;
+    --toggle-bg: rgba(255,255,255,0.08);
+    --toggle-hover: rgba(255,255,255,0.16);
+    --section-title: #7fb3d8;
+    --chip-bg: #1a1a28;
+    --filter-bg: #1a1a28;
+    --filter-active-text: #ffffff;
+    --filter-inactive-text: #9090aa;
+    --filter-inactive-bg: transparent;
+    --filter-bar-bg: #101018;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #101018;
+      --card: #1a1a28;
+      --text: #e4e2ee;
+      --text-secondary: #b0b0c8;
+      --muted: #9090aa;
+      --accent: #e74c3c;
+      --accent2: #7fb3d8;
+      --border: #28283a;
+      --shadow: 0 1px 3px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.2);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.4);
+      --header-bg: linear-gradient(135deg, #08080f 0%, #0e0e20 50%, #081428 100%);
+      --top-story-bg: linear-gradient(135deg, #1f1520 0%, #1a1a28 100%);
+      --top-story-border: #352030;
+      --source-color: #606078;
+      --source-link: #7090a8;
+      --source-dot: #404058;
+      --footer-color: #505068;
+      --toggle-bg: rgba(255,255,255,0.08);
+      --toggle-hover: rgba(255,255,255,0.16);
+      --section-title: #7fb3d8;
+      --chip-bg: #1a1a28;
+      --filter-bg: #1a1a28;
+      --filter-active-text: #ffffff;
+      --filter-inactive-text: #9090aa;
+      --filter-inactive-bg: transparent;
+      --filter-bar-bg: #101018;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  /* ---- Header (compact) ---- */
+  .header {
+    background: var(--header-bg);
+    color: white;
+    padding: 1.75rem 1.5rem 1.5rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .header-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+
+  .header .edition {
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 0.4rem;
+  }
+
+  .header h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.25rem;
+  }
+
+  .header .date {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .header .divider-line {
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+    margin: 0.75rem auto 0;
+    border-radius: 2px;
+  }
+
+  /* ---- Theme Toggle ---- */
+  .theme-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+    background: var(--toggle-bg);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: white;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+    backdrop-filter: blur(8px);
+  }
+
+  .theme-toggle:hover { background: var(--toggle-hover); }
+
+  /* ---- Filter Bar ---- */
+  .filter-bar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--filter-bar-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 1.25rem;
+    display: flex;
+    gap: 0.35rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .filter-bar::-webkit-scrollbar { display: none; }
+
+  .filter-btn {
+    flex-shrink: 0;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--filter-inactive-bg);
+    color: var(--filter-inactive-text);
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+
+  .filter-btn:hover { border-color: var(--muted); }
+
+  .filter-btn.active {
+    color: var(--filter-active-text);
+    border-color: transparent;
+  }
+
+  /* Filter button colors when active â set by JS via data-color */
+
+  /* ---- Container ---- */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.25rem 1.25rem 3rem;
+  }
+
+  /* ---- Summary Bar ---- */
+  .summary-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .summary-chip {
+    background: var(--chip-bg);
+    border-radius: 8px;
+    padding: 0.6rem 0.5rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+
+  .summary-chip .num {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--accent2);
+    line-height: 1.2;
+  }
+
+  .summary-chip .label {
+    font-size: 0.6rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.1rem;
+  }
+
+  /* ---- Sections ---- */
+  .section { margin-bottom: 1.5rem; }
+  .section.hidden { display: none; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .section-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .section-header h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--section-title);
+    letter-spacing: -0.2px;
+  }
+
+  /* ---- Story Grid (2 columns on desktop) ---- */
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  /* ---- Story Cards (compact) ---- */
+  .story {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    border-left: 3px solid transparent;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .story.filtered-out { display: none; }
+
+  .story:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  /* Border colors by category */
+  .story.border-conflict    { border-left-color: var(--tag-conflict); }
+  .story.border-science     { border-left-color: var(--tag-science); }
+  .story.border-economy     { border-left-color: var(--tag-economy); }
+  .story.border-environment { border-left-color: var(--tag-environment); }
+  .story.border-diplomacy   { border-left-color: var(--tag-diplomacy); }
+  .story.border-space       { border-left-color: var(--tag-space); }
+  .story.border-policy      { border-left-color: var(--tag-policy); }
+  .story.border-ukraine     { border-left-color: var(--tag-ukraine); }
+  .story.border-health      { border-left-color: var(--tag-health); }
+  .story.border-tech        { border-left-color: var(--tag-tech); }
+  .story.border-society     { border-left-color: var(--tag-society); }
+  .story.border-energy      { border-left-color: var(--tag-energy); }
+  .story.border-security    { border-left-color: var(--tag-security); }
+  .story.border-romania     { border-left-color: var(--tag-romania); }
+  .story.border-reddit      { border-left-color: var(--tag-reddit); }
+
+  /* Tag badges */
+  .story-tag {
+    display: inline-block;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    margin-bottom: 0.35rem;
+    color: white;
+    width: fit-content;
+  }
+
+  .tag-conflict    { background: var(--tag-conflict); }
+  .tag-science     { background: var(--tag-science); }
+  .tag-economy     { background: var(--tag-economy); }
+  .tag-environment { background: var(--tag-environment); }
+  .tag-diplomacy   { background: var(--tag-diplomacy); }
+  .tag-space       { background: var(--tag-space); }
+  .tag-policy      { background: var(--tag-policy); }
+  .tag-ukraine     { background: var(--tag-ukraine); }
+  .tag-health      { background: var(--tag-health); }
+  .tag-tech        { background: var(--tag-tech); }
+  .tag-society     { background: var(--tag-society); }
+  .tag-energy      { background: var(--tag-energy); }
+  .tag-security    { background: var(--tag-security); }
+  .tag-romania     { background: var(--tag-romania); }
+  .tag-reddit      { background: var(--tag-reddit); }
+
+  .story h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: var(--text);
+    line-height: 1.35;
+    letter-spacing: -0.1px;
+  }
+
+  .story p {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .story .source {
+    margin-top: 0.5rem;
+    font-size: 0.68rem;
+    color: var(--source-color);
+  }
+
+  .story .source a {
+    color: var(--source-link);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--source-dot);
+  }
+
+  .story .source a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ---- Reddit story extras ---- */
+  .story .reddit-meta {
+    font-size: 0.65rem;
+    color: var(--source-color);
+    margin-top: 0.35rem;
+  }
+
+  .story .reddit-meta span { margin-right: 0.75rem; }
+
+  /* ---- Top Story (featured, always full width) ---- */
+  .top-story {
+    background: var(--top-story-bg);
+    border: 1px solid var(--top-story-border);
+    border-left: 4px solid var(--accent);
+    padding: 1.25rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .top-story .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    margin-bottom: 0.5rem;
+  }
+
+  .top-story h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+    color: var(--text);
+    line-height: 1.35;
+    letter-spacing: -0.2px;
+  }
+
+  .top-story p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .top-story .source {
+    margin-top: 0.5rem;
+    font-size: 0.68rem;
+    color: var(--source-color);
+  }
+
+  .top-story .source a {
+    color: var(--source-link);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--source-dot);
+  }
+
+  .top-story .source a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ---- Footer ---- */
+  .footer {
+    text-align: center;
+    padding: 1.25rem;
+    color: var(--footer-color);
+    font-size: 0.7rem;
+    border-top: 1px solid var(--border);
+    margin-top: 1rem;
+  }
+
+  /* ---- Responsive ---- */
+
+  @media (max-width: 900px) {
+    .container { max-width: 700px; }
+    .story-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  }
+
+  @media (max-width: 640px) {
+    .header { padding: 1.25rem 1rem 1.15rem; }
+    .header h1 { font-size: 1.35rem; }
+    .header .date { font-size: 0.78rem; }
+    .container { padding: 0.75rem 0.75rem 2rem; }
+    .summary-bar { grid-template-columns: repeat(4, 1fr); gap: 0.35rem; }
+    .summary-chip { padding: 0.45rem 0.25rem; }
+    .summary-chip .num { font-size: 1rem; }
+    .summary-chip .label { font-size: 0.5rem; }
+    .story-grid { grid-template-columns: 1fr; gap: 0.5rem; }
+    .story { padding: 0.85rem; }
+    .top-story { padding: 1rem; }
+    .section { margin-bottom: 1.25rem; }
+    .theme-toggle { top: 0.6rem; right: 0.6rem; width: 30px; height: 30px; font-size: 0.85rem; }
+    .filter-bar { padding: 0.5rem 0.75rem; }
+  }
+
+  @media (min-width: 1200px) {
+    .container { max-width: 1150px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" id="themeBtn">&#9790;</button>
+  <div class="header-content">
+    <div class="edition">Daily Briefing</div>
+    <h1>Global News Report</h1>
+    <div class="date">{{DATE_LONG}}</div>
+    <div class="divider-line"></div>
+  </div>
+</div>
+
+<!-- Filter bar â auto-populated by JS from data-category attributes -->
+<div class="filter-bar" id="filterBar"></div>
+
+<div class="container">
+
+  <!-- SUMMARY BAR -->
+  <div class="summary-bar">
+    <div class="summary-chip">
+      <div class="num">{{STORY_COUNT}}</div>
+      <div class="label">Stories</div>
+    </div>
+    <div class="summary-chip">
+      <div class="num">{{CATEGORY_COUNT}}</div>
+      <div class="label">Categories</div>
+    </div>
+    <div class="summary-chip">
+      <div class="num">{{COUNTRY_COUNT}}</div>
+      <div class="label">Countries</div>
+    </div>
+    <div class="summary-chip">
+      <div class="num">{{SOURCE_COUNT}}</div>
+      <div class="label">Sources</div>
+    </div>
+  </div>
+
+  <!--
+  =============================================
+  NEWS CONTENT GOES BELOW.
+
+  COMPONENT PATTERNS â use these exact HTML structures.
+  IMPORTANT: Every story must have a data-category attribute for the filter system.
+
+  *** TOP STORY (exactly one, full width, before all sections) ***
+  <div class="section" data-section="top">
+    <div class="top-story" data-category="conflict">
+      <div class="badge">&#9888; Top Story</div>
+      <h3>Headline here</h3>
+      <p>Summary paragraph here.</p>
+      <div class="source">Sources: <a href="URL">Name</a> &middot; <a href="URL">Name</a></div>
+    </div>
+  </div>
+
+  *** SECTION with STORY GRID (one per category) ***
+  <div class="section" data-section="CATEGORY_KEY">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fdecea;">EMOJI</div>
+      <h2>Section Title</h2>
+    </div>
+    <div class="story-grid">
+      ... story cards go here ...
+    </div>
+  </div>
+
+  Always wrap story cards inside <div class="story-grid">.
+
+  Section icon background colors:
+    Conflict/Geopolitics: #fdecea   Ukraine: #fef5e7
+    Policy: #fef0e6                 Economy: #e8f8e8
+    Space/Science: #e8f0fe          Environment: #e0f5f0
+    Diplomacy: #f3e8fd              Health: #fde8f0
+    Tech: #e8f0fe                   Society: #ede8fd
+    Energy: #fef8e0                 Security: #eaeaea
+    Romania: #e8eaf5                Reddit: #ffe8e0
+
+  *** STORY CARD (inside story-grid) ***
+  <div class="story border-CATEGORY" data-category="CATEGORY">
+    <span class="story-tag tag-CATEGORY">LABEL</span>
+    <h3>Headline</h3>
+    <p>2-3 sentence summary.</p>
+    <div class="source">Sources: <a href="URL">Name</a> &middot; <a href="URL">Name</a></div>
+  </div>
+
+  *** REDDIT STORY CARD (inside Reddit section's story-grid) ***
+  <div class="story border-reddit" data-category="reddit">
+    <span class="story-tag tag-reddit">r/subreddit</span>
+    <h3>Post title or topic summary</h3>
+    <p>Brief summary of the discussion or key points.</p>
+    <div class="reddit-meta"><span>&#9650; 1.2k</span><span>&#128172; 340 comments</span></div>
+    <div class="source"><a href="URL">View on Reddit</a></div>
+  </div>
+
+  Available tag/border classes: conflict, science, economy, environment,
+  diplomacy, space, policy, ukraine, health, tech, society, energy,
+  security, romania, reddit.
+  You may add new ones if a story needs a category not listed.
+  =============================================
+  -->
+
+  {{NEWS_CONTENT}}
+
+</div>
+
+<div class="footer">
+  <p>Daily Global News Briefing &mdash; {{DATE_LONG}}</p>
+  <p style="margin-top:0.25rem;">{{FOOTER_SOURCES}}</p>
+</div>
+
+<script>
+  /* ---- Theme Toggle ---- */
+  function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : (current === 'light' ? 'dark' :
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark'));
+    html.setAttribute('data-theme', next);
+    document.getElementById('themeBtn').innerHTML = next === 'dark' ? '&#9728;' : '&#9790;';
+    try { localStorage.setItem('theme', next); } catch(e) {}
+  }
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) {
+      document.documentElement.setAttribute('data-theme', saved);
+      document.getElementById('themeBtn').innerHTML = saved === 'dark' ? '&#9728;' : '&#9790;';
+    }
+  } catch(e) {}
+
+  /* ---- Category Filter System ---- */
+  (function() {
+    const TAG_COLORS = {
+      conflict:'#e74c3c', science:'#2980b9', economy:'#27ae60', environment:'#16a085',
+      diplomacy:'#8e44ad', space:'#34495e', policy:'#d35400', ukraine:'#f39c12',
+      health:'#e84393', tech:'#0984e3', society:'#6c5ce7', energy:'#e17055',
+      security:'#636e72', romania:'#002B7F', reddit:'#ff4500'
+    };
+    const TAG_LABELS = {
+      conflict:'Conflict', science:'Science', economy:'Economy', environment:'Environment',
+      diplomacy:'Diplomacy', space:'Space', policy:'Policy', ukraine:'Ukraine',
+      health:'Health', tech:'Tech', society:'Society', energy:'Energy',
+      security:'Security', romania:'Romania', reddit:'Reddit'
+    };
+
+    // Discover all categories present on the page
+    const allStories = document.querySelectorAll('[data-category]');
+    const cats = [];
+    const seen = new Set();
+    allStories.forEach(el => {
+      const c = el.getAttribute('data-category');
+      if (c && !seen.has(c)) { seen.add(c); cats.push(c); }
+    });
+
+    const bar = document.getElementById('filterBar');
+    if (cats.length === 0) { bar.style.display = 'none'; return; }
+
+    // "All" button
+    const allBtn = document.createElement('button');
+    allBtn.className = 'filter-btn active';
+    allBtn.textContent = 'All';
+    allBtn.style.background = 'var(--accent2)';
+    allBtn.style.color = 'var(--filter-active-text)';
+    allBtn.style.borderColor = 'transparent';
+    allBtn.onclick = () => applyFilter(null);
+    bar.appendChild(allBtn);
+
+    // Category buttons
+    cats.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.textContent = TAG_LABELS[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
+      btn.dataset.cat = cat;
+      btn.onclick = () => applyFilter(cat);
+      bar.appendChild(btn);
+    });
+
+    let activeCat = null;
+
+    function applyFilter(cat) {
+      activeCat = cat;
+      // Update button states
+      bar.querySelectorAll('.filter-btn').forEach(btn => {
+        const isAll = !btn.dataset.cat;
+        const isMatch = btn.dataset.cat === cat;
+        if ((!cat && isAll) || (cat && isMatch)) {
+          btn.classList.add('active');
+          const color = isAll ? 'var(--accent2)' : (TAG_COLORS[cat] || 'var(--accent2)');
+          btn.style.background = color;
+          btn.style.color = 'var(--filter-active-text)';
+          btn.style.borderColor = 'transparent';
+        } else {
+          btn.classList.remove('active');
+          btn.style.background = 'var(--filter-inactive-bg)';
+          btn.style.color = 'var(--filter-inactive-text)';
+          btn.style.borderColor = '';
+        }
+      });
+
+      // Filter stories
+      allStories.forEach(el => {
+        if (!cat || el.getAttribute('data-category') === cat) {
+          el.classList.remove('filtered-out');
+        } else {
+          el.classList.add('filtered-out');
+        }
+      });
+
+      // Hide sections with no visible stories
+      document.querySelectorAll('.section[data-section]').forEach(sec => {
+        if (!cat) { sec.classList.remove('hidden'); return; }
+        const ds = sec.getAttribute('data-section');
+        // Top story section: check its top-story element
+        if (ds === 'top') {
+          const ts = sec.querySelector('.top-story');
+          sec.classList.toggle('hidden', ts && ts.classList.contains('filtered-out'));
+          return;
+        }
+        const visible = sec.querySelectorAll('.story:not(.filtered-out)');
+        sec.classList.toggle('hidden', visible.length === 0);
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
