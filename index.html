@@ -3,48 +3,142 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vlad's Daily News - Archive</title>
+<title>Vlad's Daily News — Archive</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-  :root{--bg:#f4f5f7;--card:#fff;--text:#1a1a2e;--muted:#555570;--accent:#c0392b;--accent2:#2c3e50;--border:#e2e4e8;--shadow:0 1px 3px rgba(0,0,0,.06)}
-  @media(prefers-color-scheme:dark){:root{--bg:#101018;--card:#1a1a28;--text:#e4e2ee;--muted:#9090aa;--accent:#e74c3c;--accent2:#7fb3d8;--border:#28283a;--shadow:0 1px 3px rgba(0,0,0,.25)}}
-  [data-theme="dark"]{--bg:#101018;--card:#1a1a28;--text:#e4e2ee;--muted:#9090aa;--accent:#e74c3c;--accent2:#7fb3d8;--border:#28283a;--shadow:0 1px 3px rgba(0,0,0,.25)}
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;transition:background .3s,color .3s}
-  .header{background:linear-gradient(135deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff;padding:2.5rem 2rem;text-align:center}
-  .header h1{font-size:2rem;font-weight:800;margin-bottom:.3rem}
-  .header p{font-weight:300;color:rgba(255,255,255,.65);font-size:.9rem}
-  .container{max-width:700px;margin:0 auto;padding:1.5rem 1.5rem 4rem}
-  .today-btn{display:block;width:100%;padding:1.25rem;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:1.2rem;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;margin-bottom:2rem;transition:opacity .2s}
-  .today-btn:hover{opacity:.9}
-  .today-btn .sub{font-size:.8rem;font-weight:400;opacity:.85;display:block;margin-top:.3rem}
-  h2{font-size:1.1rem;font-weight:700;color:var(--accent2);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid var(--border)}
-  .archive-list{list-style:none}.archive-list li{margin-bottom:.5rem}
-  .archive-list a{display:block;padding:.85rem 1.25rem;background:var(--card);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);color:var(--text);text-decoration:none;font-weight:500;transition:transform .15s}
-  .archive-list a:hover{transform:translateY(-1px)}
-  .empty{color:var(--muted);text-align:center;padding:2rem;font-style:italic}
-  .footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.72rem;border-top:1px solid var(--border);margin-top:2rem}
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #faf9f6; --card: #ffffff; --text: #1a1a2e;
+    --muted: #64648c; --accent: #c0392b; --accent2: #2c3e50;
+    --border: #e8e6e1; --shadow: 0 2px 20px rgba(0,0,0,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0f0f1a; --card: #1c1c2e; --text: #e8e6f0;
+      --muted: #9898b8; --accent: #e74c3c; --accent2: #7fb3d8;
+      --border: #2a2a40; --shadow: 0 2px 20px rgba(0,0,0,0.3); }
+  }
+  [data-theme="dark"] { --bg: #0f0f1a; --card: #1c1c2e; --text: #e8e6f0;
+    --muted: #9898b8; --accent: #e74c3c; --accent2: #7fb3d8;
+    --border: #2a2a40; --shadow: 0 2px 20px rgba(0,0,0,0.3); }
+  [data-theme="light"] { --bg: #faf9f6; --card: #ffffff; --text: #1a1a2e;
+    --muted: #64648c; --accent: #c0392b; --accent2: #2c3e50;
+    --border: #e8e6e1; --shadow: 0 2px 20px rgba(0,0,0,0.06); }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.7; -webkit-font-smoothing: antialiased;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white; padding: 3rem 2rem; text-align: center;
+  }
+  .header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 2.4rem; font-weight: 900; margin-bottom: 0.5rem; }
+  .header p { font-weight: 300; color: rgba(255,255,255,0.7); font-size: 1rem; }
+  .container { max-width: 700px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .today-btn {
+    display: block; width: 100%; padding: 1.25rem;
+    background: var(--accent); color: white; border: none; border-radius: 12px;
+    font-family: 'Playfair Display', Georgia, serif; font-size: 1.3rem; font-weight: 700;
+    cursor: pointer; text-align: center; text-decoration: none;
+    margin-bottom: 2.5rem; transition: opacity 0.2s;
+  }
+  .today-btn:hover { opacity: 0.9; }
+  .today-btn .sub { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 400; opacity: 0.85; display: block; margin-top: 0.3rem; }
+  h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.3rem; color: var(--accent2); margin-bottom: 1rem;
+    padding-bottom: 0.5rem; border-bottom: 2px solid var(--border); }
+  .archive-list { list-style: none; }
+  .archive-list li { margin-bottom: 0.5rem; }
+  .archive-list a {
+    display: block; padding: 0.85rem 1.25rem; background: var(--card);
+    border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow);
+    color: var(--text); text-decoration: none; font-weight: 500;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .archive-list a:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.12); }
+  .archive-list .date-label { font-family: 'Playfair Display', Georgia, serif; font-size: 1.05rem; }
+  .archive-list .day-name { color: var(--muted); font-size: 0.82rem; margin-left: 0.5rem; }
+  .empty { color: var(--muted); text-align: center; padding: 2rem; font-style: italic; }
+  .footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.78rem; border-top: 1px solid var(--border); margin-top: 2rem; }
 </style>
 </head>
 <body>
-<div class="header"><h1>Global News Report</h1><p>Vlad's Daily News Archive</p></div>
-<div class="container">
-  <a class="today-btn" href="latest.html">Read Today's Edition<span class="sub" id="todayDate"></span></a>
-  <h2>Past Editions</h2>
-  <ul class="archive-list" id="archiveList"><li class="empty">Loading archive...</li></ul>
+
+<div class="header">
+  <h1>Global News Report</h1>
+  <p>Vlad's Daily News Archive</p>
 </div>
-<div class="footer"><p>Vlad's Daily News Collection</p></div>
+
+<div class="container">
+  <a class="today-btn" href="latest.html" id="todayBtn">
+    Read Today's Edition
+    <span class="sub" id="todayDate"></span>
+  </a>
+
+  <h2>Past Editions</h2>
+  <ul class="archive-list" id="archiveList">
+    <li class="empty">Loading archive...</li>
+  </ul>
+</div>
+
+<div class="footer">
+  <p>Vlad's Daily News Collection</p>
+</div>
+
 <script>
-  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  function fmt(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
-  function fmtLong(d){return days[d.getDay()]+', '+months[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear()}
-  document.getElementById('todayDate').textContent=fmtLong(new Date());
-  const list=document.getElementById('archiveList');list.innerHTML='';const links=[];const today=new Date();
-  for(let i=0;i<60;i++){const d=new Date(today);d.setDate(d.getDate()-i);links.push({date:d,fileName:'DailyNews-'+fmt(d)+'.html'})}
-  Promise.all(links.map(l=>fetch(l.fileName,{method:'HEAD'}).then(r=>r.ok?l:null).catch(()=>null))).then(r=>{
-    const ex=r.filter(Boolean);if(!ex.length){list.innerHTML='<li class="empty">No past editions found yet.</li>';return}
-    ex.forEach(l=>{const li=document.createElement('li');const a=document.createElement('a');a.href=l.fileName;a.innerHTML='<span class="date-label">'+fmtLong(l.date)+'</span>';li.appendChild(a);list.appendChild(li)})});
+  // This script auto-discovers dated files.
+  // When hosted on GitHub Pages, you'll replace this with a generated list.
+  // For local use, it generates links for the past 30 days.
+  const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  function fmt(d) {
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function fmtLong(d) {
+    return days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+  }
+
+  const today = new Date();
+  document.getElementById('todayDate').textContent = fmtLong(today);
+
+  // Build archive links for the past 60 days
+  const list = document.getElementById('archiveList');
+  list.innerHTML = '';
+  const links = [];
+
+  for (let i = 0; i < 60; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const dateStr = fmt(d);
+    const fileName = 'DailyNews-' + dateStr + '.html';
+    links.push({ date: d, dateStr, fileName });
+  }
+
+  // Check which files exist via fetch and build list
+  let found = 0;
+  Promise.all(links.map(l =>
+    fetch(l.fileName, { method: 'HEAD' })
+      .then(r => r.ok ? l : null)
+      .catch(() => null)
+  )).then(results => {
+    const existing = results.filter(Boolean);
+    if (existing.length === 0) {
+      list.innerHTML = '<li class="empty">No past editions found yet.</li>';
+      return;
+    }
+    existing.forEach(l => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = l.fileName;
+      a.innerHTML = '<span class="date-label">' + fmtLong(l.date) + '</span>';
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+  });
 </script>
+
 </body>
 </html>
