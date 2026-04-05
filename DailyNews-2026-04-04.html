@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Global News Briefing â April 4, 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #faf9f6;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #64648c;
+    --accent: #c0392b;
+    --accent2: #2c3e50;
+    --border: #e8e6e1;
+    --tag-geo: #e74c3c;
+    --tag-sci: #2980b9;
+    --tag-eco: #27ae60;
+    --tag-env: #16a085;
+    --tag-diplo: #8e44ad;
+    --tag-space: #2c3e50;
+    --shadow: 0 2px 20px rgba(0,0,0,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white;
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+
+  .header-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+
+  .header .edition {
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 0.75rem;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+  }
+
+  .header .date {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .header .divider-line {
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    margin: 1rem auto 0;
+    border-radius: 2px;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .section-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent2);
+  }
+
+  .story {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+    border-left: 4px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .story:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+  }
+
+  .story.priority-high { border-left-color: var(--tag-geo); }
+  .story.priority-space { border-left-color: var(--tag-space); }
+  .story.priority-eco { border-left-color: var(--tag-eco); }
+  .story.priority-env { border-left-color: var(--tag-env); }
+  .story.priority-diplo { border-left-color: var(--tag-diplo); }
+  .story.priority-sci { border-left-color: var(--tag-sci); }
+
+  .story-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    color: white;
+  }
+
+  .tag-conflict { background: var(--tag-geo); }
+  .tag-space { background: var(--tag-space); }
+  .tag-economy { background: var(--tag-eco); }
+  .tag-environment { background: var(--tag-env); }
+  .tag-diplomacy { background: var(--tag-diplo); }
+  .tag-science { background: var(--tag-sci); }
+
+  .story h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .story p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .story .source {
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    color: #999;
+  }
+
+  .story .source a {
+    color: #7f8c8d;
+    text-decoration: none;
+    border-bottom: 1px dotted #bdc3c7;
+  }
+
+  .story .source a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .top-story {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+    border: 1px solid #fde2e2;
+    border-left: 5px solid var(--accent);
+    padding: 2rem;
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+  }
+
+  .top-story .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+  }
+
+  .top-story h3 {
+    font-size: 1.35rem;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    color: #bbb;
+    font-size: 0.78rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  .summary-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .summary-chip {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+
+  .summary-chip .num {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--accent2);
+  }
+
+  .summary-chip .label {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.8rem; }
+    .container { padding: 1rem; }
+    .story, .top-story { padding: 1.2rem; }
+    .summary-bar { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div class="edition">Daily Briefing</div>
+    <h1>Global News Report</h1>
+    <div class="date">Saturday, April 4, 2026</div>
+    <div class="divider-line"></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Summary Bar -->
+  <div class="summary-bar">
+    <div class="summary-chip">
+      <div class="num">15</div>
+      <div class="label">Stories</div>
+    </div>
+    <div class="summary-chip">
+      <div class="num">6</div>
+      <div class="label">Categories</div>
+    </div>
+    <div class="summary-chip">
+      <div class="num">12+</div>
+      <div class="label">Countries</div>
+    </div>
+    <div class="summary-chip">
+      <div class="num">10+</div>
+      <div class="label">Sources</div>
+    </div>
+  </div>
+
+  <!-- TOP STORY -->
+  <div class="section">
+    <div class="top-story">
+      <div class="badge">&#9888; Top Story</div>
+      <h3>Iran War Enters 6th Week â U.S. Fighter Jet Downed, Search for Missing Airman Continues</h3>
+      <p>The conflict in Iran intensifies as a U.S. F-15E Strike Eagle was shot down over central Iran, triggering a search-and-rescue operation that cost a second aircraft and wounded helicopter crews. Iran claims it downed two U.S. warplanes. President Trump has issued an ultimatum demanding the Strait of Hormuz be reopened by Monday, warning that "all hell will rain down" otherwise. Ceasefire talks led by Pakistan have reached a standstill.</p>
+      <div class="source">Sources: <a href="https://www.npr.org/2026/04/04/nx-s1-5773436/iran-war-updates">NPR</a> Â· <a href="https://www.aljazeera.com/news/liveblog/2026/4/4/iran-war-live-tehran-downs-2-us-warplanes-israel-bombs-lebanon-bridges">Al Jazeera</a></div>
+    </div>
+  </div>
+
+  <!-- CONFLICT & GEOPOLITICS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fdecea;">&#127758;</div>
+      <h2>Conflict &amp; Geopolitics</h2>
+    </div>
+
+    <div class="story priority-high">
+      <span class="story-tag tag-conflict">Conflict</span>
+      <h3>Israel Invades Lebanon as Regional War Expands</h3>
+      <p>Israel launched a ground invasion into parts of southern Lebanon, targeting Iran-backed Hezbollah fighters who have been firing rockets at Israel in support of Iran. Israeli forces say they have struck more than 3,500 targets across Lebanon in the past month, displacing over a million civilians and causing more than 1,300 casualties according to Lebanon's government.</p>
+      <div class="source">Sources: <a href="https://www.aljazeera.com/">Al Jazeera</a> Â· <a href="https://www.npr.org/sections/world/">NPR</a></div>
+    </div>
+
+    <div class="story priority-high">
+      <span class="story-tag tag-conflict">Conflict</span>
+      <h3>Kuwait Struck by Iranian Missiles Amid Strait of Hormuz Crisis</h3>
+      <p>Iran struck a power and desalination plant in Kuwait, hours after hitting an oil refinery that sparked large fires. The escalation comes as the Strait of Hormuz remains closed, with Trump demanding its reopening under threat of further military action. Russia's Foreign Ministry has expressed alarm at reports of missile attacks near the Bushehr Nuclear Power Plant.</p>
+      <div class="source">Sources: <a href="https://www.aljazeera.com/news/liveblog/2026/4/4/iran-war-live-tehran-downs-2-us-warplanes-israel-bombs-lebanon-bridges">Al Jazeera</a></div>
+    </div>
+
+    <div class="story priority-high">
+      <span class="story-tag tag-conflict">Conflict</span>
+      <h3>U.S. "Double Tap" Strike on Iranian Bridge Draws International Condemnation</h3>
+      <p>The U.S. bombed a major bridge under construction in Karaj, west of Tehran, then struck the site again approximately an hour later as emergency crews were assisting the wounded. Iran says the strike on the B1 suspension bridge killed eight people and wounded nearly 100 others.</p>
+      <div class="source">Sources: <a href="https://www.democracynow.org/2026/4/3/headlines">Democracy Now!</a> Â· <a href="https://www.npr.org/sections/world/">NPR</a></div>
+    </div>
+  </div>
+
+  <!-- DIPLOMACY & INTERNATIONAL RELATIONS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#f3e8fd;">&#129309;</div>
+      <h2>Diplomacy &amp; International Relations</h2>
+    </div>
+
+    <div class="story priority-diplo">
+      <span class="story-tag tag-diplomacy">Diplomacy</span>
+      <h3>European Allies Break with U.S. Over Iran War</h3>
+      <p>Several European nations have refused to support the U.S.-Israeli campaign against Iran. France has blocked Israeli planes from flying weapons through its airspace, while Italy refused last-minute permission for U.S. bombers to land in Sicily. Meanwhile, Hungary and Slovakia are seeking EU approval to lift the ban on Russian oil and gas amid energy supply fears.</p>
+      <div class="source">Sources: <a href="https://www.democracynow.org/2026/4/1/headlines">Democracy Now!</a> Â· <a href="https://www.npr.org/sections/world/">NPR</a></div>
+    </div>
+
+    <div class="story priority-diplo">
+      <span class="story-tag tag-diplomacy">Diplomacy</span>
+      <h3>Russia and Egypt Call for Immediate Middle East Ceasefire</h3>
+      <p>Russian Foreign Minister Sergey Lavrov and Egyptian counterpart Badr Abdelatty held a joint press conference calling for an immediate ceasefire and a return to diplomacy. The current ceasefire talks between the U.S. and Iran, mediated by Pakistan, have stalled.</p>
+      <div class="source">Sources: <a href="https://www.aljazeera.com/news/liveblog/2026/4/4/iran-war-live-tehran-downs-2-us-warplanes-israel-bombs-lebanon-bridges">Al Jazeera</a></div>
+    </div>
+
+    <div class="story priority-diplo">
+      <span class="story-tag tag-diplomacy">Diplomacy</span>
+      <h3>Venezuela: U.S. Lifts Sanctions on Acting President RodrÃ­guez</h3>
+      <p>Three months after the U.S. military captured NicolÃ¡s Maduro, the Treasury Department lifted sanctions on acting President Delcy RodrÃ­guez. Venezuela's state oil company PDVSA has also been authorized to sell oil directly to U.S. companies. Venezuelans report cautious optimism, though systemic change remains slow.</p>
+      <div class="source">Sources: <a href="https://www.npr.org/2026/04/02/g-s1-116142/u-s-lift-sanctions-venezuela-president-delcy-rodriguez">NPR</a> Â· <a href="https://www.csmonitor.com/World/Americas/2026/0403/Venezuela-Maduro-Trump-U.S.-regime-change">CS Monitor</a></div>
+    </div>
+  </div>
+
+  <!-- SPACE & SCIENCE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#e8f0fe;">&#128640;</div>
+      <h2>Space &amp; Science</h2>
+    </div>
+
+    <div class="story priority-space">
+      <span class="story-tag tag-space">Space</span>
+      <h3>Artemis II Crew Halfway to the Moon â First Humans Beyond Earth Orbit in 50 Years</h3>
+      <p>NASA's Artemis II mission, launched April 1 from Kennedy Space Center, has passed the halfway point to the Moon. Astronauts Reid Wiseman, Victor Glover, Christina Koch, and Canadian Jeremy Hansen became the first humans to leave Earth orbit since Apollo 17 in 1972. The mission marks the first time a person of color, a woman, and a non-U.S. citizen have traveled beyond low Earth orbit. Lunar flyby is expected on April 6.</p>
+      <div class="source">Sources: <a href="https://www.nasa.gov/blogs/missions/2026/04/04/artemis-ii-flight-day-3-crew-prepares-cabin-for-lunar-flyby/">NASA</a> Â· <a href="https://www.space.com/news/live/artemis-2-nasa-moon-mission-updates-april-4-2026">Space.com</a> Â· <a href="https://www.npr.org/2026/04/02/nx-s1-5770599/artemis-ii-10-day-mission-preview">NPR</a></div>
+    </div>
+
+    <div class="story priority-sci">
+      <span class="story-tag tag-science">Science</span>
+      <h3>Light-Based Wireless Chip Achieves 360+ Gbps Data Speeds</h3>
+      <p>Researchers have developed a tiny chip packed with dozens of miniature lasers that transmits data using light instead of radio waves, achieving speeds over 360 gigabits per second. The breakthrough could dramatically boost internet speeds while cutting energy consumption.</p>
+      <div class="source">Sources: <a href="https://scitechdaily.com/">SciTechDaily</a></div>
+    </div>
+
+    <div class="story priority-sci">
+      <span class="story-tag tag-science">Science</span>
+      <h3>New Quantum Encryption Approach Harnesses the Talbot Effect</h3>
+      <p>Scientists have unveiled a new approach to ultra-secure communication that makes quantum encryption simpler and more efficient by using multiple states of single photons instead of just two, dramatically boosting data capacity for secure transmissions.</p>
+      <div class="source">Sources: <a href="https://scitechdaily.com/">SciTechDaily</a></div>
+    </div>
+  </div>
+
+  <!-- ECONOMY & MARKETS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#e8f8e8;">&#128200;</div>
+      <h2>Economy &amp; Markets</h2>
+    </div>
+
+    <div class="story priority-eco">
+      <span class="story-tag tag-economy">Economy</span>
+      <h3>Global Markets on Edge as Oil Stays Near $100 Per Barrel</h3>
+      <p>Despite brief ceasefire hopes offering temporary relief, Brent crude remains around $100/barrel â well above peacetime norms. European consumer spending is declining sharply: German retail sales fell 0.6%, French consumer spending collapsed 1.4%. Goldman Sachs projects global GDP growth of 2.9% in 2026, below the pre-pandemic average of 3.2%.</p>
+      <div class="source">Sources: <a href="https://www.riotimesonline.com/global-economy-briefing-peace-rally-eurozone-cpi-beat/">Rio Times</a> Â· <a href="https://www.goldmansachs.com/insights/articles/forecasts-for-the-worlds-biggest-economies-in-2026">Goldman Sachs</a></div>
+    </div>
+
+    <div class="story priority-eco">
+      <span class="story-tag tag-economy">Economy</span>
+      <h3>China Shows Relative Economic Strength; U.S. Growth Holds Steady</h3>
+      <p>China posted 6.3% industrial production growth in early 2026 â its strongest since September â with retail sales up 2.8%. The U.S. economy is expected to expand 2.8% this year, driven by fading tariff impacts and tax cut benefits. European economies face the largest headwinds from energy costs.</p>
+      <div class="source">Sources: <a href="https://climateandeconomy.com/2026/04/03/3rd-april-2026-todays-round-up-of-economic-news/">Climate and Economy</a> Â· <a href="https://www.deloitte.com/us/en/insights/topics/economy/global-economic-outlook-2026.html">Deloitte</a></div>
+    </div>
+  </div>
+
+  <!-- CLIMATE & ENVIRONMENT -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#e0f5f0;">&#127793;</div>
+      <h2>Climate &amp; Environment</h2>
+    </div>
+
+    <div class="story priority-env">
+      <span class="story-tag tag-environment">Environment</span>
+      <h3>Alaska Permafrost Thawing in "Wisconsin-Sized Swath," Creating Climate Feedback Loop</h3>
+      <p>Permafrost along Alaska's North Slope is thawing across a massive area, creating what scientists describe as a "vicious loop" â as permafrost melts, it releases greenhouse gases that further warm the climate, accelerating more thawing.</p>
+      <div class="source">Sources: <a href="https://climateandeconomy.com/2026/04/04/4th-april-2026-todays-round-up-of-climate-news/">Climate and Economy</a></div>
+    </div>
+
+    <div class="story priority-env">
+      <span class="story-tag tag-environment">Environment</span>
+      <h3>Extreme Weather: Giant Hailstorm Turns Chinese City into "Ice Age" Scene</h3>
+      <p>A massive hailstorm hit Guiyang, China on April 2, covering the city in ice. Meanwhile, southern Vietnam faces prolonged heatwaves above 37Â°C, and wildfires in southern California's Riverside County have grown to over 4,100 acres with evacuation orders in effect.</p>
+      <div class="source">Sources: <a href="https://climateandeconomy.com/2026/04/04/4th-april-2026-todays-round-up-of-climate-news/">Climate and Economy</a></div>
+    </div>
+
+    <div class="story priority-env">
+      <span class="story-tag tag-environment">Environment</span>
+      <h3>Human Activity Has Increased Reactive Nitrogen 400% Since Pre-Industrial Era</h3>
+      <p>A new study warns that human activities have severely disrupted the global nitrogen cycle. Nitrous oxide â a greenhouse gas 265 times more potent than COâ â has risen 20% in atmospheric concentration, driven primarily by agriculture and fossil fuel use.</p>
+      <div class="source">Sources: <a href="https://www.newsecuritybeat.org/2026/04/environmental-security-weekly-watch-march-30-april-3-2026/">New Security Beat</a></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Daily Global News Briefing â Compiled April 4, 2026</p>
+  <p style="margin-top:0.3rem;">Sources include NPR, Al Jazeera, NASA, CNN, Democracy Now!, Reuters, and other major outlets.</p>
+  <p style="margin-top:0.3rem;">Curated automatically for Vlad's Daily News Collection</p>
+</div>
+
+</body>
+</html>
