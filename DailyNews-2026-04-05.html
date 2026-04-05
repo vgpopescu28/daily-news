@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Global News Briefing â April 5, 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #faf9f6;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #64648c;
+    --accent: #c0392b;
+    --accent2: #2c3e50;
+    --border: #e8e6e1;
+    --tag-geo: #e74c3c;
+    --tag-sci: #2980b9;
+    --tag-eco: #27ae60;
+    --tag-env: #16a085;
+    --tag-diplo: #8e44ad;
+    --tag-space: #2c3e50;
+    --tag-policy: #d35400;
+    --tag-ukraine: #f39c12;
+    --shadow: 0 2px 20px rgba(0,0,0,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white;
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+
+  .header-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+
+  .header .edition {
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 0.75rem;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+  }
+
+  .header .date {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .header .divider-line {
+    width: 60px;
+    height: 3px;
+    background: var(--accent);
+    margin: 1rem auto 0;
+    border-radius: 2px;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .section-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent2);
+  }
+
+  .story {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+    border-left: 4px solid transparent;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .story:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+  }
+
+  .story.priority-high { border-left-color: var(--tag-geo); }
+  .story.priority-space { border-left-color: var(--tag-space); }
+  .story.priority-eco { border-left-color: var(--tag-eco); }
+  .story.priority-env { border-left-color: var(--tag-env); }
+  .story.priority-diplo { border-left-color: var(--tag-diplo); }
+  .story.priority-sci { border-left-color: var(--tag-sci); }
+  .story.priority-policy { border-left-color: var(--tag-policy); }
+  .story.priority-ukraine { border-left-color: var(--tag-ukraine); }
+
+  .story-tag {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    color: white;
+  }
+
+  .tag-conflict { background: var(--tag-geo); }
+  .tag-space { background: var(--tag-space); }
+  .tag-economy { background: var(--tag-eco); }
+  .tag-environment { background: var(--tag-env); }
+  .tag-diplomacy { background: var(--tag-diplo); }
+  .tag-science { background: var(--tag-sci); }
+  .tag-policy { background: var(--tag-policy); }
+  .tag-ukraine { background: var(--tag-ukraine); }
+
+  .story h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .story p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .story .source {
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    color: #999;
+  }
+
+  .story .source a {
+    color: #7f8c8d;
+    text-decoration: none;
+    border-bottom: 1px dotted #bdc3c7;
+  }
+
+  .story .source a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .top-story {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+    border: 1px solid #fde2e2;
+    border-left: 5px solid var(--accent);
+    padding: 2rem;
+    border-radius: 14px;
+    margin-bottom: 1.5rem;
+  }
+
+  .top-story .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+  }
+
+  .top-story h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .top-story p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .top-story .source {
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    color: #999;
+  }
+
+  .top-story .source a {
+    color: #7f8c8d;
+    text-decoration: none;
+    border-bottom: 1px dotted #bdc3c7;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    color: #bbb;
+    font-size: 0.78rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  .summary-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .summary-chip {
+    background: var(--card);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+
+  .summary-chip .num {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--accent2);
+  }
+
+  .summary-chip .label {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.8rem; }
+    .container { padding: 1rem; }
+    .story, .top-story { padding: 1.2rem; }
+    .summary-bar { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div class="edition">Daily Briefing</div>
+    <h1>Global News Report</h1>
+    <div class="date">Saturday, April 5, 2026</div>
+    <div class="divider-line"></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Summary Bar -->
+  <div class="summary-bar">
+    <div class="summary-chip">
+      <div class="num">17</div>
+      <div class="label">Stories</div>
+    </div>
+    <div class="summary-chip">
+      <div class="num">8</div>
+      <div class="label">Categories</div>
+    </div>
+    <div class="summary-chip">
+      <div class="num">15+</div>
+      <div class="label">Countries</div>
+    </div>
+    <div class="summary-chip">
+      <div class="num">12+</div>
+      <div class="label">Sources</div>
+    </div>
+  </div>
+
+  <!-- TOP STORY -->
+  <div class="section">
+    <div class="top-story">
+      <div class="badge">&#9888; Top Story</div>
+      <h3>Downed U.S. Airman Rescued in Iran â Trump Issues Hormuz Ultimatum as War Enters Week 6</h3>
+      <p>President Trump confirmed that the U.S. weapons systems officer whose F-15E was shot down over Iran has been rescued and is "now safe and sound." Meanwhile, Trump has issued a 48-hour deadline demanding Iran reopen the Strait of Hormuz by Monday, warning that "all hell will rain down." Tehran rejected the ultimatum, with Iranian military officials warning the "gates of hell" will open for the U.S. and Israel if infrastructure strikes continue. U.S. gas prices have surged 37% to $4.10/gallon since strikes began on February 28.</p>
+      <div class="source">Sources: <a href="https://www.cnn.com/2026/04/05/world/live-news/iran-war-us-trump-oil">CNN</a> &middot; <a href="https://www.aljazeera.com/news/liveblog/2026/4/5/iran-war-live-tehran-rejects-trumps-ultimatum-fire-at-kuwait-oil-complex">Al Jazeera</a> &middot; <a href="https://www.npr.org/2026/04/04/nx-s1-5773436/iran-war-updates">NPR</a></div>
+    </div>
+  </div>
+
+  <!-- CONFLICT & GEOPOLITICS: IRAN -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fdecea;">&#127758;</div>
+      <h2>Iran War &amp; Middle East</h2>
+    </div>
+
+    <div class="story priority-high">
+      <span class="story-tag tag-conflict">Conflict</span>
+      <h3>Iran Strikes Kuwait Oil and Power Infrastructure</h3>
+      <p>Iran struck a power and desalination plant in Kuwait, hours after hitting an oil refinery that sparked large fires. The attacks on Gulf state infrastructure represent a widening of the conflict beyond Iran's borders, threatening energy supplies across the region.</p>
+      <div class="source">Sources: <a href="https://www.aljazeera.com/news/liveblog/2026/4/5/iran-war-live-tehran-rejects-trumps-ultimatum-fire-at-kuwait-oil-complex">Al Jazeera</a></div>
+    </div>
+
+    <div class="story priority-high">
+      <span class="story-tag tag-conflict">Conflict</span>
+      <h3>U.S.-Israeli Strikes Hit Iranian Petrochemical Zone â 5 Killed, 170 Wounded</h3>
+      <p>Iran says U.S.-Israeli attacks on the Mahshahr Petrochemical Zone killed five people and wounded 170 others. Tehran reports that more than 30 universities have also been targeted since the beginning of the war. Attacks on the Bushehr Nuclear Power Plant continue to draw alarm from Russia.</p>
+      <div class="source">Sources: <a href="https://www.aljazeera.com/news/liveblog/2026/4/4/iran-war-live-tehran-downs-2-us-warplanes-israel-bombs-lebanon-bridges">Al Jazeera</a> &middot; <a href="https://www.cbsnews.com/live-updates/iran-war-us-trump-warns-more-coming-oil-gas-strait-hormuz/">CBS News</a></div>
+    </div>
+
+    <div class="story priority-high">
+      <span class="story-tag tag-conflict">Conflict</span>
+      <h3>Israel Expands Lebanon Invasion â 3,500+ Targets Struck in One Month</h3>
+      <p>Israel's military says it has struck more than 3,500 targets across Lebanon since renewing large-scale attacks on Hezbollah and invading parts of southern Lebanon. The humanitarian crisis deepens with over a million civilians displaced and more than 1,300 killed according to Lebanon's government.</p>
+      <div class="source">Sources: <a href="https://www.aljazeera.com/">Al Jazeera</a> &middot; <a href="https://www.npr.org/sections/world/">NPR</a></div>
+    </div>
+
+    <div class="story priority-high">
+      <span class="story-tag tag-conflict">Conflict</span>
+      <h3>Ceasefire Talks Stall as Diplomats Push for De-escalation</h3>
+      <p>Pakistan-mediated ceasefire talks between the U.S. and Iran have reached a standstill. Russia and Egypt have jointly called for an immediate ceasefire. Aid groups warn that the war has upended their ability to deliver food and medicine to millions in the region.</p>
+      <div class="source">Sources: <a href="https://www.aljazeera.com/news/liveblog/2026/4/5/iran-war-live-tehran-rejects-trumps-ultimatum-fire-at-kuwait-oil-complex">Al Jazeera</a> &middot; <a href="https://www.npr.org/sections/world/">NPR</a></div>
+    </div>
+  </div>
+
+  <!-- UKRAINE-RUSSIA WAR -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fef5e7;">&#9876;&#65039;</div>
+      <h2>Ukraine-Russia War</h2>
+    </div>
+
+    <div class="story priority-ukraine">
+      <span class="story-tag tag-ukraine">Ukraine</span>
+      <h3>Russia Launches Record 7,987 Glide Bombs in March â "Easter Escalation" Strikes Civilians</h3>
+      <p>Russia launched nearly 8,000 glide bombs in March alone, exceeding the previous record by 1,500. In a massive "Easter escalation," deadly air strikes hit civilian areas across Ukraine. A Russian drone struck a market in Nikopol on April 4, killing at least five people and injuring 27.</p>
+      <div class="source">Sources: <a href="https://kyivindependent.com/">Kyiv Independent</a> &middot; <a href="https://empr.media/news/war/russia-ukraine-war-updates-key-developments-as-of-april-4-2026/">EMPR</a></div>
+    </div>
+
+    <div class="story priority-ukraine">
+      <span class="story-tag tag-ukraine">Ukraine</span>
+      <h3>Ukraine Strikes Russian Lukoil Refinery Despite Ally Pressure to Ease Oil Attacks</h3>
+      <p>Ukraine reportedly struck a Russian Lukoil refinery, defying calls from foreign allies to pause drone attacks on Russian oil infrastructure as the Iran war drives up global fuel prices. Ukraine has rebuilt 4 GW of the 9 GW of power generation capacity destroyed by Russia. Zelensky's office says it expects U.S. envoys Witkoff and Kushner to visit Kyiv after Easter to resume peace talks.</p>
+      <div class="source">Sources: <a href="https://kyivindependent.com/">Kyiv Independent</a> &middot; <a href="https://empr.media/news/war/russia-ukraine-war-updates-key-developments-as-of-april-2-2026/">EMPR</a></div>
+    </div>
+  </div>
+
+  <!-- U.S. POLICY -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#fef0e6;">&#127963;&#65039;</div>
+      <h2>U.S. Policy</h2>
+    </div>
+
+    <div class="story priority-policy">
+      <span class="story-tag tag-policy">Policy</span>
+      <h3>Trump Proposes $1.5 Trillion Defense Budget with 10% Domestic Cuts</h3>
+      <p>The White House unveiled its fiscal year 2027 budget, proposing a 44% increase in defense spending to $1.5 trillion â the largest such request in decades. Non-defense programs face 10% cuts, with housing, agriculture, healthcare, and environmental agencies bearing the brunt. Total federal spending would reach $2.2 trillion. Congress is free to modify or reject the proposal.</p>
+      <div class="source">Sources: <a href="https://www.npr.org/2026/04/03/nx-s1-5772701/trump-budget-defense-spending">NPR</a> &middot; <a href="https://www.washingtonpost.com/politics/2026/04/03/trump-2027-annual-budget-congress-defense/e912a878-2f11-11f1-aac2-f56b5ccad184_story.html">Washington Post</a> &middot; <a href="https://www.bloomberg.com/news/articles/2026-04-03/trump-budget-pits-spending-cuts-against-massive-defense-push">Bloomberg</a></div>
+    </div>
+
+    <div class="story priority-policy">
+      <span class="story-tag tag-policy">Policy</span>
+      <h3>Cuba Pardons 2,010 Prisoners Under U.S. Pressure</h3>
+      <p>Cuba pardoned and released 2,010 prisoners in what the government called a Holy Week "humanitarian gesture" â one of the largest such releases in nearly a decade. The move follows Trump administration pressure that has worsened Cuba's economy, including cutting off oil from Venezuela. Human rights groups question whether any political prisoners were included.</p>
+      <div class="source">Sources: <a href="https://www.npr.org/2026/04/03/g-s1-116297/cuba-releasing-2-010-prisoners-as-the-us-pressures-the-islands-government">NPR</a> &middot; <a href="https://www.aljazeera.com/news/2026/4/3/cuba-to-pardon-more-than-2000-prisoners-amid-us-pressure">Al Jazeera</a> &middot; <a href="https://www.cnn.com/2026/04/02/americas/cuba-prisoner-release-us-trump-pressure-intl-hnk">CNN</a></div>
+    </div>
+  </div>
+
+  <!-- ECONOMY & ENERGY -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#e8f8e8;">&#128200;</div>
+      <h2>Economy &amp; Energy</h2>
+    </div>
+
+    <div class="story priority-eco">
+      <span class="story-tag tag-economy">Economy</span>
+      <h3>Oil Surges Past $111/Barrel â Strait of Hormuz Crisis Threatens Global Supply</h3>
+      <p>Brent crude has surged to $111.69/barrel, briefly approaching $117 in some trading sessions â a multi-year high. The closure of the Strait of Hormuz, through which nearly 20% of global oil flows, remains the primary risk factor. OPEC+ is set to decide on further production increases on April 5. Global oil demand forecasts have been cut by around 1 million barrels/day for March-April.</p>
+      <div class="source">Sources: <a href="https://fortune.com/article/price-of-oil-04-03-2026/">Fortune</a> &middot; <a href="https://www.iea.org/reports/oil-market-report-march-2026">IEA</a></div>
+    </div>
+
+    <div class="story priority-eco">
+      <span class="story-tag tag-economy">Economy</span>
+      <h3>European Consumer Spending Collapses Amid Energy Crisis</h3>
+      <p>The energy shock is hammering European consumers. German retail sales fell 0.6% month-on-month, French consumer spending collapsed 1.4%, and Spanish retail sales growth halved. Meat prices have soared more than 20% in some European nations. Global GDP growth is forecast at 2.7-2.9% in 2026 â below the pre-pandemic average of 3.2%.</p>
+      <div class="source">Sources: <a href="https://climateandeconomy.com/2026/04/03/3rd-april-2026-todays-round-up-of-economic-news/">Climate and Economy</a> &middot; <a href="https://www.goldmansachs.com/insights/articles/forecasts-for-the-worlds-biggest-economies-in-2026">Goldman Sachs</a></div>
+    </div>
+  </div>
+
+  <!-- SPACE & SCIENCE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#e8f0fe;">&#128640;</div>
+      <h2>Space &amp; Science</h2>
+    </div>
+
+    <div class="story priority-space">
+      <span class="story-tag tag-space">Space</span>
+      <h3>Artemis II Crew Speeds Toward Lunar Flyby â Now Over 100,000 Miles from Earth</h3>
+      <p>NASA's Artemis II crew is more than halfway to the Moon and preparing the Orion spacecraft cabin for the historic lunar observation period. The four astronauts â including the first person of color, woman, and non-U.S. citizen to leave low Earth orbit â will loop around the Moon on April 6, surpassing the record for the farthest humans have ever traveled in space at 252,021 miles from Earth.</p>
+      <div class="source">Sources: <a href="https://www.nasa.gov/blogs/missions/2026/04/04/artemis-ii-flight-day-3-crew-prepares-cabin-for-lunar-flyby/">NASA</a> &middot; <a href="https://www.space.com/news/live/artemis-2-nasa-moon-mission-updates-april-4-2026">Space.com</a> &middot; <a href="https://www.foxnews.com/us/artemis-ii-astronauts-nearly-halfway-moon-nasa-shares-stunning-photos-orion-spacecraft">Fox News</a></div>
+    </div>
+
+    <div class="story priority-sci">
+      <span class="story-tag tag-science">Science</span>
+      <h3>MXene Materials Breakthrough: Conductivity Boosted 160x with Atomic Precision</h3>
+      <p>Researchers have achieved a breakthrough in MXenes â ultra-thin, high-tech materials â by creating perfect atomic order that boosts conductivity 160 times over. The advance could accelerate applications in electronics, energy storage, and electromagnetic shielding.</p>
+      <div class="source">Sources: <a href="https://scitechdaily.com/">SciTechDaily</a></div>
+    </div>
+
+    <div class="story priority-sci">
+      <span class="story-tag tag-science">Science</span>
+      <h3>Brain's "Support Cells" Revealed as Key Players in Fear Memory</h3>
+      <p>Astrocytes, long considered mere support cells in the brain, are now shown to actively help form, recall, and weaken fear responses by interacting with neurons in real time. The discovery could reshape understanding of anxiety disorders and trauma-related conditions.</p>
+      <div class="source">Sources: <a href="https://www.sciencedaily.com/">ScienceDaily</a></div>
+    </div>
+  </div>
+
+  <!-- CLIMATE & ENVIRONMENT -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon" style="background:#e0f5f0;">&#127793;</div>
+      <h2>Climate &amp; Environment</h2>
+    </div>
+
+    <div class="story priority-env">
+      <span class="story-tag tag-environment">Environment</span>
+      <h3>March 2026 Shatters All-Time U.S. Warmth Record by 1.5&deg;C</h3>
+      <p>Satellite data confirms March 2026 broke the all-time U.S. warmth record, coming in approximately 1.5&deg;C warmer than the previous record set in March 2012. An exceptional April warm spell continues with August-like minimum temperatures recorded across Tennessee (75&deg;F), Kentucky (72&deg;F), and Missouri (70&deg;F).</p>
+      <div class="source">Sources: <a href="https://climateandeconomy.com/2026/04/04/4th-april-2026-todays-round-up-of-climate-news/">Climate and Economy</a></div>
+    </div>
+
+    <div class="story priority-env">
+      <span class="story-tag tag-environment">Environment</span>
+      <h3>Extreme Weather: Hailstorm Turns Chinese City to Ice; Vietnam Heatwave; California Wildfires</h3>
+      <p>A massive hailstorm hit Guiyang, China on April 2, transforming the city into what residents described as an "Ice Age" scene. Southern Vietnam faces a prolonged heatwave exceeding 37&deg;C. In California, the Springs fire in Riverside County has grown to 4,127 acres with active evacuation orders.</p>
+      <div class="source">Sources: <a href="https://climateandeconomy.com/2026/04/04/4th-april-2026-todays-round-up-of-climate-news/">Climate and Economy</a></div>
+    </div>
+
+    <div class="story priority-env">
+      <span class="story-tag tag-environment">Environment</span>
+      <h3>50% of French Homes at Risk from Climate-Driven Soil Instability</h3>
+      <p>The European Environment Agency reports that approximately 10.4 million homes in France â roughly 50% of the country's detached housing stock â are located in medium or high risk zones for shrink-swell soils, a problem worsened by climate change and prolonged droughts.</p>
+      <div class="source">Sources: <a href="https://climateandeconomy.com/2026/04/04/4th-april-2026-todays-round-up-of-climate-news/">Climate and Economy</a></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Daily Global News Briefing &mdash; Compiled April 5, 2026</p>
+  <p style="margin-top:0.3rem;">Sources include NPR, Al Jazeera, CNN, NASA, CBS News, Washington Post, Bloomberg, Kyiv Independent, and other major outlets.</p>
+  <p style="margin-top:0.3rem;">Curated automatically for Vlad's Daily News Collection</p>
+</div>
+
+</body>
+</html>
