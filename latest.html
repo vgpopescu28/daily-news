@@ -37,7 +37,6 @@
     --filter-inactive-text: #555570;
     --filter-inactive-bg: transparent;
     --filter-bar-bg: #f4f5f7;
-    /* Tag colors */
     --tag-conflict: #e74c3c;
     --tag-science: #2980b9;
     --tag-economy: #27ae60;
@@ -55,9 +54,6 @@
     --tag-reddit: #ff4500;
   }
 
-  /* ============================================
-     DARK MODE
-     ============================================ */
   [data-theme="dark"] {
     --bg: #101018;
     --card: #1a1a28;
@@ -130,7 +126,6 @@
     transition: background 0.3s ease, color 0.3s ease;
   }
 
-  /* ---- Header (compact) ---- */
   .header {
     background: var(--header-bg);
     color: white;
@@ -170,7 +165,6 @@
     border-radius: 2px;
   }
 
-  /* ---- Theme Toggle ---- */
   .theme-toggle {
     position: absolute;
     top: 1rem;
@@ -193,7 +187,6 @@
 
   .theme-toggle:hover { background: var(--toggle-hover); }
 
-  /* ---- Filter Bar ---- */
   .filter-bar {
     position: sticky;
     top: 0;
@@ -233,16 +226,12 @@
     border-color: transparent;
   }
 
-  /* Filter button colors when active — set by JS via data-color */
-
-  /* ---- Container ---- */
   .container {
     max-width: 1100px;
     margin: 0 auto;
     padding: 1.25rem 1.25rem 3rem;
   }
 
-  /* ---- Summary Bar ---- */
   .summary-bar {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -274,7 +263,6 @@
     margin-top: 0.1rem;
   }
 
-  /* ---- Sections ---- */
   .section { margin-bottom: 1.5rem; }
   .section.hidden { display: none; }
 
@@ -305,14 +293,12 @@
     letter-spacing: -0.2px;
   }
 
-  /* ---- Story Grid (2 columns on desktop) ---- */
   .story-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.6rem;
   }
 
-  /* ---- Story Cards (compact) ---- */
   .story {
     background: var(--card);
     border-radius: 10px;
@@ -332,7 +318,6 @@
     box-shadow: var(--shadow-hover);
   }
 
-  /* Border colors by category */
   .story.border-conflict    { border-left-color: var(--tag-conflict); }
   .story.border-science     { border-left-color: var(--tag-science); }
   .story.border-economy     { border-left-color: var(--tag-economy); }
@@ -349,7 +334,6 @@
   .story.border-romania     { border-left-color: var(--tag-romania); }
   .story.border-reddit      { border-left-color: var(--tag-reddit); }
 
-  /* Tag badges */
   .story-tag {
     display: inline-block;
     font-size: 0.55rem;
@@ -409,7 +393,6 @@
 
   .story .source a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
-  /* ---- Reddit story extras ---- */
   .story .reddit-meta {
     font-size: 0.65rem;
     color: var(--source-color);
@@ -418,7 +401,6 @@
 
   .story .reddit-meta span { margin-right: 0.75rem; }
 
-  /* ---- Top Story (featured, always full width) ---- */
   .top-story {
     background: var(--top-story-bg);
     border: 1px solid var(--top-story-border);
@@ -470,7 +452,6 @@
 
   .top-story .source a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
-  /* ---- Footer ---- */
   .footer {
     text-align: center;
     padding: 1.25rem;
@@ -479,8 +460,6 @@
     border-top: 1px solid var(--border);
     margin-top: 1rem;
   }
-
-  /* ---- Responsive ---- */
 
   @media (max-width: 900px) {
     .container { max-width: 700px; }
@@ -521,128 +500,63 @@
   </div>
 </div>
 
-<!-- Filter bar — auto-populated by JS from data-category attributes -->
 <div class="filter-bar" id="filterBar"></div>
 
 <div class="container">
 
-  <!-- SUMMARY BAR -->
   <div class="summary-bar">
     <div class="summary-chip">
-      <div class="num">22</div>
+      <div class="num">19</div>
       <div class="label">Stories</div>
     </div>
     <div class="summary-chip">
-      <div class="num">11</div>
+      <div class="num">9</div>
       <div class="label">Categories</div>
     </div>
     <div class="summary-chip">
-      <div class="num">16</div>
+      <div class="num">18</div>
       <div class="label">Countries</div>
     </div>
     <div class="summary-chip">
-      <div class="num">27</div>
+      <div class="num">14</div>
       <div class="label">Sources</div>
     </div>
   </div>
 
-  <!--
-  =============================================
-  NEWS CONTENT GOES BELOW.
-
-  COMPONENT PATTERNS — use these exact HTML structures.
-  IMPORTANT: Every story must have a data-category attribute for the filter system.
-
-  *** TOP STORY (exactly one, full width, before all sections) ***
+  <!-- TOP STORY -->
   <div class="section" data-section="top">
     <div class="top-story" data-category="conflict">
       <div class="badge">&#9888; Top Story</div>
-      <h3>Headline here</h3>
-      <p>Summary paragraph here.</p>
-      <div class="source">Sources: <a href="URL">Name</a> &middot; <a href="URL">Name</a></div>
-    </div>
-  </div>
-
-  *** SECTION with STORY GRID (one per category) ***
-  <div class="section" data-section="CATEGORY_KEY">
-    <div class="section-header">
-      <div class="section-icon" style="background:#fdecea;">EMOJI</div>
-      <h2>Section Title</h2>
-    </div>
-    <div class="story-grid">
-      ... story cards go here ...
-    </div>
-  </div>
-
-  Always wrap story cards inside <div class="story-grid">.
-
-  Section icon background colors:
-    Conflict/Geopolitics: #fdecea   Ukraine: #fef5e7
-    Policy: #fef0e6                 Economy: #e8f8e8
-    Space/Science: #e8f0fe          Environment: #e0f5f0
-    Diplomacy: #f3e8fd              Health: #fde8f0
-    Tech: #e8f0fe                   Society: #ede8fd
-    Energy: #fef8e0                 Security: #eaeaea
-    Romania: #e8eaf5                Reddit: #ffe8e0
-
-  *** STORY CARD (inside story-grid) ***
-  <div class="story border-CATEGORY" data-category="CATEGORY">
-    <span class="story-tag tag-CATEGORY">LABEL</span>
-    <h3>Headline</h3>
-    <p>2-3 sentence summary.</p>
-    <div class="source">Sources: <a href="URL">Name</a> &middot; <a href="URL">Name</a></div>
-  </div>
-
-  *** REDDIT STORY CARD (inside Reddit section's story-grid) ***
-  <div class="story border-reddit" data-category="reddit">
-    <span class="story-tag tag-reddit">r/subreddit</span>
-    <h3>Post title or topic summary</h3>
-    <p>Brief summary of the discussion or key points.</p>
-    <div class="reddit-meta"><span>&#9650; 1.2k</span><span>&#128172; 340 comments</span></div>
-    <div class="source"><a href="URL">View on Reddit</a></div>
-  </div>
-
-  Available tag/border classes: conflict, science, economy, environment,
-  diplomacy, space, policy, ukraine, health, tech, society, energy,
-  security, romania, reddit.
-  You may add new ones if a story needs a category not listed.
-  =============================================
-  -->
-
-    <!-- TOP STORY -->
-  <div class="section" data-section="top">
-    <div class="top-story" data-category="conflict">
-      <div class="badge">&#9888; Top Story</div>
-      <h3>U.S. Airman Rescued Deep Inside Iran After F-15 Shot Down; Trump Issues Ultimatum on Strait of Hormuz</h3>
-      <p>A U.S. Air Force colonel whose F-15 was shot down over Iran has been rescued after evading capture for over a day, scaling rugged terrain as hundreds of special operations forces and CIA operatives mounted a massive recovery effort. President Trump followed the rescue with a profanity-laced social media post threatening to bomb Iranian power plants and infrastructure, setting a Tuesday 8 PM Eastern deadline for Iran to fully reopen the Strait of Hormuz. The war, now in its sixth week, has killed over 2,076 people in Iran and sent global oil prices past $126 per barrel.</p>
-      <div class="source">Sources: <a href="https://www.npr.org/2026/04/05/nx-s1-5774368/iran-war-updates">NPR</a> &middot; <a href="https://www.cnn.com/2026/04/05/middleeast/iran-us-israel-war-what-we-know-week-6-intl-hnk">CNN</a> &middot; <a href="https://www.cbsnews.com/live-updates/iran-war-us-trump-warns-more-coming-oil-gas-strait-hormuz/">CBS News</a></div>
+      <h3>Trump Issues New Ultimatum to Iran Over Strait of Hormuz as War Enters Week 6</h3>
+      <p>President Trump threatened to strike Iran's power plants and infrastructure if Tehran does not reopen the Strait of Hormuz by Tuesday evening, a critical waterway carrying 20% of global oil supply that has been effectively shut for over a month. Iran's parliament speaker responded that the strait would remain closed until Iran is fully compensated for war damages, warning the region could "burn." The standoff has driven Brent crude above $109 per barrel and pushed US gas prices up 37% since the conflict began on February 28.</p>
+      <div class="source">Sources: <a href="https://www.cnn.com/2026/04/06/world/live-news/iran-war-us-trump-oil">CNN</a> &middot; <a href="https://www.aljazeera.com/news/liveblog/2026/4/6/iran-war-live-tehran-rejects-trumps-tuesday-deadline-on-strait-of-hormuz">Al Jazeera</a> &middot; <a href="https://www.washingtonpost.com/national/2026/04/05/iran-israel-us-lebanon-latest-april-5-2026/b680ebe0-30a6-11f1-aac2-f56b5ccad184_story.html">Washington Post</a></div>
     </div>
   </div>
 
   <!-- CONFLICT & GEOPOLITICS -->
   <div class="section" data-section="conflict">
     <div class="section-header">
-      <div class="section-icon" style="background:#fdecea;">&#9760;</div>
+      <div class="section-icon" style="background:#fdecea;">&#9763;</div>
       <h2>Conflict &amp; Geopolitics</h2>
     </div>
     <div class="story-grid">
       <div class="story border-conflict" data-category="conflict">
         <span class="story-tag tag-conflict">Conflict</span>
-        <h3>Israel Escalates Lebanon Invasion, Over 1,400 Killed Since March</h3>
-        <p>Israeli airstrikes across southern Lebanon and Beirut killed at least 14 people over the weekend, including a family of six. Since March 2, more than 1,400 Lebanese have been killed — including 126 children — and over 1.2 million displaced, roughly a fifth of the country's population. Israel has announced plans to occupy southern Lebanon and destroy multiple border towns.</p>
-        <div class="source">Sources: <a href="https://www.aljazeera.com/news/2026/4/5/at-least-14-people-killed-in-israeli-strikes-across-lebanon">Al Jazeera</a> &middot; <a href="https://www.npr.org/2026/04/01/g-s1-115929/israel-south-lebanon-evacuation">NPR</a></div>
+        <h3>Israel Pushes Deeper Into Southern Lebanon as Death Toll Mounts</h3>
+        <p>Israeli ground forces are advancing toward the Litani River as the Lebanon war enters its second month, with a major battle underway at the Hezbollah stronghold of Al-Khiyam. Over 1,400 people have been killed and 1.2 million displaced since the invasion began on March 2, roughly 20% of Lebanon's entire population.</p>
+        <div class="source">Sources: <a href="https://www.aljazeera.com/news/2026/4/5/at-least-14-people-killed-in-israeli-strikes-across-lebanon">Al Jazeera</a> &middot; <a href="https://www.npr.org/2026/04/02/nx-s1-5770161/israel-invades-southern-lebanon-to-go-after-iran-allied-hezbollah-militants">NPR</a></div>
       </div>
       <div class="story border-conflict" data-category="conflict">
         <span class="story-tag tag-conflict">Conflict</span>
-        <h3>Lebanese Christians Spend Easter Under Siege Amid Israeli Ground Offensive</h3>
-        <p>Christian communities in southern Lebanon marked Easter weekend trapped between Israeli ground forces and ongoing airstrikes. Residents describe being unable to evacuate as Israeli forces blow up houses in front-line villages and bomb bridges, cutting off escape routes for civilians caught in the crossfire.</p>
-        <div class="source">Sources: <a href="https://www.npr.org/2026/04/03/nx-s1-5770202/lebanon-christians-trapped">NPR</a> &middot; <a href="https://www.opb.org/article/2026/04/05/christians-in-lebanon-spend-easter-under-siege-amid-israel-s-invasion/">OPB</a></div>
+        <h3>US Rescues Crew Member From F-15 Shot Down Over Iran</h3>
+        <p>US forces successfully recovered a crew member from an F-15 fighter jet that was shot down over Iran on Friday, ending a two-day search-and-rescue operation. The incident marks one of the most significant US military losses since the conflict began six weeks ago.</p>
+        <div class="source">Sources: <a href="https://www.cnn.com/2026/04/05/world/live-news/iran-war-us-trump-oil">CNN</a> &middot; <a href="https://www.cbsnews.com/live-updates/iran-war-trump-israel-tehran-denies-ceasefire-talks-strait-of-hormuz/">CBS News</a></div>
       </div>
       <div class="story border-conflict" data-category="conflict">
         <span class="story-tag tag-conflict">Conflict</span>
-        <h3>Mediterranean Migrant Deaths Top 683 in 2026 So Far</h3>
-        <p>At least 683 migrants have drowned or gone missing attempting to cross the Mediterranean since the start of 2026, according to the UN's International Organization for Migration. The ongoing conflicts in the Middle East and North Africa continue to drive dangerous migration flows across the sea.</p>
-        <div class="source">Sources: <a href="https://www.aljazeera.com/">Al Jazeera</a> &middot; <a href="https://www.npr.org/sections/world/">NPR</a></div>
+        <h3>683 Migrants Dead or Missing Crossing the Mediterranean in 2026</h3>
+        <p>At least 683 migrants have drowned or gone missing attempting to cross the Mediterranean Sea so far this year, according to humanitarian organizations. The grim tally underscores the continued dangers facing people fleeing conflict and poverty in Africa and the Middle East.</p>
+        <div class="source">Sources: <a href="https://www.aljazeera.com/">Al Jazeera</a> &middot; <a href="https://abcnews.com/international">ABC News</a></div>
       </div>
     </div>
   </div>
@@ -651,26 +565,26 @@
   <div class="section" data-section="ukraine">
     <div class="section-header">
       <div class="section-icon" style="background:#fef5e7;">&#127482;&#127462;</div>
-      <h2>Ukraine–Russia War</h2>
+      <h2>Ukraine-Russia War</h2>
     </div>
     <div class="story-grid">
       <div class="story border-ukraine" data-category="ukraine">
         <span class="story-tag tag-ukraine">Ukraine</span>
-        <h3>Ukraine Strikes Russian Oil Infrastructure, Defying International Pressure</h3>
-        <p>Ukrainian drones struck a Lukoil oil refinery in Kstovo and an oil terminal in Leningrad Oblast overnight, despite foreign allies urging Kyiv to pause attacks on Russian energy facilities. With the Iran war already driving fuel prices skyward, Western governments worry Ukrainian strikes on Russian oil could worsen the global energy crisis.</p>
-        <div class="source">Sources: <a href="https://kyivindependent.com/ukraine-war-latest-ukraine-confirms-strikes-on-russian-oil-infrastructure-defying-calls-to-ease-attacks-amid-soaring-fuel-prices/">Kyiv Independent</a></div>
+        <h3>Russia Claims Full Control of Luhansk Region</h3>
+        <p>Russia's Ministry of Defence announced its forces have taken full control of the Luhansk region in eastern Ukraine, one of four territories Moscow claimed to annex in 2022. Ukrainian officials have not confirmed the claim, as Russian forces gained 17 square miles in the final week of March amid a reported spring offensive.</p>
+        <div class="source">Sources: <a href="https://www.aljazeera.com/news/2026/4/1/russia-claims-to-take-full-control-of-ukraines-luhansk-region">Al Jazeera</a> &middot; <a href="https://www.russiamatters.org/news/russia-ukraine-war-report-card/russia-ukraine-war-report-card-april-1-2026">Russia Matters</a></div>
       </div>
       <div class="story border-ukraine" data-category="ukraine">
         <span class="story-tag tag-ukraine">Ukraine</span>
-        <h3>Russia Loses 1,180 Troops in Single Day; Total Casualties Surpass 1.3 Million</h3>
-        <p>Ukraine's General Staff reports Russia has lost over 1,304,550 troops since the full-scale invasion began in February 2022. In the latest 24-hour period, Russia suffered 1,180 casualties while launching 93 Shahed-type kamikaze drones, of which Ukraine intercepted 76. Nine Ukrainians were killed and 95 wounded in the attacks.</p>
-        <div class="source">Sources: <a href="https://www.aljazeera.com/features/2026/4/3/ukraine-slows-enemy-advances-liberates-land-drains-russias-war-chest">Al Jazeera</a> &middot; <a href="https://www.ukrinform.net/rubric-ato">Ukrinform</a></div>
+        <h3>Russian Drone Strikes Market in Nikopol, Killing Five</h3>
+        <p>A Russian drone targeted a market in Nikopol, Dnipropetrovsk Oblast on April 4, killing at least five people and injuring 27. Overnight, Russia launched 93 Shahed-type kamikaze drones across Ukraine, with air defenses downing 76 of them.</p>
+        <div class="source">Sources: <a href="https://empr.media/news/war/russia-ukraine-war-updates-key-developments-as-of-april-4-2026/">EMPR</a> &middot; <a href="https://kyivindependent.com/">Kyiv Independent</a></div>
       </div>
       <div class="story border-ukraine" data-category="ukraine">
         <span class="story-tag tag-ukraine">Ukraine</span>
-        <h3>Zelenskyy Visits Damascus, Builds Ties with Syrian Leadership</h3>
-        <p>Ukrainian President Volodymyr Zelenskyy traveled to Damascus for talks with Syrian leader al-Sharaa, announcing that the two countries have agreed to work together on shared interests. The visit signals Ukraine's expanding diplomatic outreach beyond traditional Western allies as it seeks broader international support.</p>
-        <div class="source">Sources: <a href="https://www.npr.org/sections/world/">NPR</a> &middot; <a href="https://www.aljazeera.com/news/">Al Jazeera</a></div>
+        <h3>Ukraine Strikes Russian Oil Infrastructure, Defying Pressure to Halt</h3>
+        <p>Ukrainian drones struck a Lukoil oil refinery in Kstovo and an oil terminal in Leningrad Oblast, continuing Kyiv's campaign against Russian energy infrastructure despite international calls to ease attacks amid soaring global fuel prices. Ukraine also recaptured 12 settlements on the Oleksandrivka axis.</p>
+        <div class="source">Sources: <a href="https://kyivindependent.com/ukraine-war-latest-ukraine-confirms-strikes-on-russian-oil-infrastructure-defying-calls-to-ease-attacks-amid-soaring-fuel-prices/">Kyiv Independent</a> &middot; <a href="https://empr.media/news/war/russia-ukraine-war-updates-key-developments-as-of-april-3-2026/">EMPR</a></div>
       </div>
     </div>
   </div>
@@ -684,15 +598,15 @@
     <div class="story-grid">
       <div class="story border-diplomacy" data-category="diplomacy">
         <span class="story-tag tag-diplomacy">Diplomacy</span>
-        <h3>China Pushes Five-Point Peace Plan for Iran; U.S. Shows Little Interest</h3>
-        <p>Beijing has put forward a five-point proposal with Pakistan to end the Iran conflict, rallying support from Gulf states and opposing a UN proposal to use force to reopen the Strait of Hormuz. The Trump administration has dismissed China's mediation efforts, viewing them as an attempt to expand geopolitical influence rather than a genuine peace initiative.</p>
-        <div class="source">Sources: <a href="https://www.ksat.com/news/politics/2026/04/04/china-aims-to-show-global-leadership-with-iran-war-diplomacy-us-appears-uninterested/">AP/KSAT</a></div>
+        <h3>Iran Formulates Response to Ceasefire Proposals, Rejects Direct Talks</h3>
+        <p>Tehran says it has formulated its response to ceasefire proposals from intermediaries but refuses to engage in direct negotiations while US and Israeli attacks continue. Special envoy Witkoff has floated a 15-point peace proposal, but Iran insists on full compensation for war damages before any reopening of the Strait.</p>
+        <div class="source">Sources: <a href="https://www.aljazeera.com/news/liveblog/2026/4/6/iran-war-live-tehran-rejects-trumps-tuesday-deadline-on-strait-of-hormuz">Al Jazeera</a> &middot; <a href="https://www.cbsnews.com/live-updates/iran-war-trump-israel-tehran-denies-ceasefire-talks-strait-of-hormuz/">CBS News</a></div>
       </div>
       <div class="story border-diplomacy" data-category="diplomacy">
         <span class="story-tag tag-diplomacy">Diplomacy</span>
-        <h3>Macron Calls for "Coalition of Independents" to Counter U.S.-China Hegemony</h3>
-        <p>During his Asian tour, French President Macron urged middle-power nations — including South Korea, Japan, India, Brazil, Canada, and Australia — to form a coalition to counterbalance the growing dominance of the United States and China. The proposal reflects Europe's strategic repositioning as transatlantic tensions continue to rise.</p>
-        <div class="source">Sources: <a href="https://foreignpolicy.com/">Foreign Policy</a> &middot; <a href="https://www.euronews.com/">Euronews</a></div>
+        <h3>South Korea's Spy Agency: Kim Jong Un's Daughter Is His Successor</h3>
+        <p>South Korea's National Intelligence Service made its most definitive assessment yet that Kim Ju Ae, Kim Jong Un's teenage daughter, has been designated as his successor. The NIS chief told lawmakers this conclusion is based on credible intelligence, not mere signs, though analysts note a young female leader would face structural barriers in Pyongyang.</p>
+        <div class="source">Sources: <a href="https://www.npr.org/2026/02/12/g-s1-109778/kim-jong-uns-daughter-close-to-being-designated-future-leader-says-spy-agency">NPR</a> &middot; <a href="https://www.aljazeera.com/news/2026/2/12/north-koreas-kim-jong-un-sets-stage-for-daughter-as-his-successor-seoul">Al Jazeera</a></div>
       </div>
     </div>
   </div>
@@ -700,21 +614,21 @@
   <!-- U.S. POLICY -->
   <div class="section" data-section="policy">
     <div class="section-header">
-      <div class="section-icon" style="background:#fef0e6;">&#127463;</div>
+      <div class="section-icon" style="background:#fef0e6;">&#127463;&#127480;</div>
       <h2>U.S. Policy</h2>
     </div>
     <div class="story-grid">
       <div class="story border-policy" data-category="policy">
         <span class="story-tag tag-policy">Policy</span>
-        <h3>One Year of Tariffs: Factory Jobs Down, Inflation Up, Trade Deficit Shrinking</h3>
-        <p>One year after Trump imposed the highest U.S. tariffs since the 1940s, factory jobs have declined and consumer prices have risen. However, the chronic trade deficit has fallen for 10 consecutive months as over 20 trading partners agreed to open their markets. The administration is now signaling pharmaceutical tariffs could reach 200% by late 2026.</p>
-        <div class="source">Sources: <a href="https://www.cnbc.com/2026/04/03/trump-tariffs-trade-war-impact.html">CNBC</a> &middot; <a href="https://budgetlab.yale.edu/research/state-us-tariffs-april-2-2026">Yale Budget Lab</a></div>
+        <h3>US Tariff Rate Hits Highest Level Since 1943 at 11%</h3>
+        <p>The effective US tariff rate has climbed to 11%, the highest since 1943, after more than 50 trade policy changes by the Trump administration. The tariffs are projected to raise $194 billion in 2026 alone. A Pew survey found 58% of Americans lack confidence in the president's trade decisions.</p>
+        <div class="source">Sources: <a href="https://budgetlab.yale.edu/research/state-us-tariffs-april-2-2026">Yale Budget Lab</a> &middot; <a href="https://taxfoundation.org/research/all/federal/trump-tariffs-trade-war/">Tax Foundation</a></div>
       </div>
       <div class="story border-policy" data-category="policy">
         <span class="story-tag tag-policy">Policy</span>
-        <h3>Majority of Americans Skeptical of Trump's Trade and Tariff Policies</h3>
-        <p>A new Pew Research survey finds 58% of U.S. adults have little or no confidence in Trump's trade policy decisions, while 63% express skepticism about his tariff handling. The U.S. effective tariff rate stands at 11%, the highest since 1943, following the Supreme Court's February ruling that IEEPA cannot be used to impose tariffs.</p>
-        <div class="source">Sources: <a href="https://www.pewresearch.org/short-reads/2026/04/01/how-americans-view-trumps-handling-of-trade-and-tariffs/">Pew Research</a> &middot; <a href="https://taxfoundation.org/research/all/federal/trump-tariffs-trade-war/">Tax Foundation</a></div>
+        <h3>EPA Sued Over Repeal of Mercury Emission Standards for Coal Plants</h3>
+        <p>A coalition of US health and environmental groups is taking the EPA to court over its repeal of standards limiting mercury, lead, and other hazardous air pollution from coal-fired power plants. The repeal allows these plants to emit more harmful heavy metals, which critics say will damage public health.</p>
+        <div class="source">Sources: <a href="https://earth.org/this-week-in-climate-news-april-2026-week-1/">Earth.Org</a> &middot; <a href="https://climateandeconomy.com/2026/04/04/4th-april-2026-todays-round-up-of-climate-news/">Climate &amp; Economy</a></div>
       </div>
     </div>
   </div>
@@ -728,15 +642,15 @@
     <div class="story-grid">
       <div class="story border-economy" data-category="economy">
         <span class="story-tag tag-economy">Economy</span>
-        <h3>Brent Crude Surges Past $126 as Strait of Hormuz Standoff Intensifies</h3>
-        <p>Global energy markets are in turmoil as the near-total closure of the Strait of Hormuz — through which 20 million barrels of oil transit daily — has sent Brent crude past $126 per barrel. Economists project a 1% CPI increase for March, the sharpest monthly rise since 2022, with U.S. gas prices jumping roughly $1 per gallon.</p>
-        <div class="source">Sources: <a href="https://markets.financialcontent.com/stocks/article/marketminute-2026-4-2-global-energy-markets-on-edge-as-strait-of-hormuz-standoff-sends-brent-crude-to-126">MarketMinute</a> &middot; <a href="https://www.bloomberg.com/news/newsletters/2026-04-06/oil-shock-is-adding-stress-to-the-global-economy">Bloomberg</a></div>
+        <h3>Oil Prices Surge 90% as Hormuz Closure Triggers Global Energy Crisis</h3>
+        <p>WTI crude has nearly doubled to $112 per barrel since the Iran conflict began, with US gasoline hitting $4.11 per gallon, the highest in four years. The Strait of Hormuz closure has choked off roughly 20 million barrels per day of transit capacity, sending shockwaves through global energy markets.</p>
+        <div class="source">Sources: <a href="https://www.fool.com/investing/2026/04/04/heres-why-oil-prices-are-surging-and-what-a-strait/">Motley Fool</a> &middot; <a href="https://www.reelfinancial.com/archives/92891">Reel Financial</a></div>
       </div>
-      <div class="story border-energy" data-category="energy">
-        <span class="story-tag tag-energy">Energy</span>
-        <h3>Energy Sector Posts 38% Q1 Return as Oil Majors Face Stranded Assets</h3>
-        <p>The Energy Select Sector SPDR Fund surged 38.4% in Q1 2026, benefiting from soaring crude prices. Paradoxically, Shell, TotalEnergies, and BP have underperformed as their massive joint ventures in Qatar's North Field and Iraqi oil fields remain stranded behind the Hormuz blockade. U.S. LNG feedgas flows hit a record 19.7 Bcf per day.</p>
-        <div class="source">Sources: <a href="https://markets.financialcontent.com/stocks/article/marketminute-2026-4-3-energy-sector-outperformance-surging-crude-and-geopolitical-turmoil">MarketMinute</a> &middot; <a href="https://www.aga.org/research-policy/resource-library/natural-gas-market-indicators-april-2-2026/">AGA</a></div>
+      <div class="story border-economy" data-category="economy">
+        <span class="story-tag tag-economy">Economy</span>
+        <h3>Goldman Sachs Warns S&amp;P 500 Could Drop 22% on Oil Shock</h3>
+        <p>Goldman Sachs strategists warned that persistent disruptions to global oil supplies could drag the S&amp;P 500 down to 5,400 in 2026, a 22% decline from its January peak. Moody's chief economist said a recession would be difficult to avoid if prices remain elevated much longer. Asian stock markets are already falling broadly.</p>
+        <div class="source">Sources: <a href="https://www.fool.com/investing/2026/04/06/stock-market-crash-oil-shock-economy-do-this-next/">Motley Fool</a> &middot; <a href="https://www.aljazeera.com/news/2026/4/2/oil-surges-asian-stocks-plunge-as-trump-vows-to-keep-up-iran-attacks">Al Jazeera</a></div>
       </div>
     </div>
   </div>
@@ -750,15 +664,15 @@
     <div class="story-grid">
       <div class="story border-space" data-category="space">
         <span class="story-tag tag-space">Space</span>
-        <h3>Artemis II Astronauts Arrive at the Moon, First Crewed Lunar Visit in 50+ Years</h3>
-        <p>NASA's Artemis II crew entered the lunar sphere of influence early Monday morning, marking the first time humans have reached the Moon since Apollo 17 in 1972. The four astronauts will witness a solar eclipse from beyond the far side of the Moon later today, conducting science observations during this historic flyby mission.</p>
-        <div class="source">Sources: <a href="https://www.cnn.com/2026/04/01/science/live-news/artemis-2-nasa-launch">CNN</a> &middot; <a href="https://www.space.com">Space.com</a> &middot; <a href="https://www.nasa.gov/2026-news-releases/">NASA</a></div>
+        <h3>Artemis II Astronauts Arrive at the Moon for Historic Flyby</h3>
+        <p>NASA's Artemis II crew entered the lunar sphere of influence early Monday morning, five days after their historic launch from Kennedy Space Center. Astronauts Wiseman, Glover, Koch, and Canada's Hansen will observe a solar eclipse from beyond the far side of the Moon today before beginning their return journey to Earth.</p>
+        <div class="source">Sources: <a href="https://www.nasa.gov/news-release/liftoff-nasa-launches-astronauts-on-historic-artemis-moon-mission/">NASA</a> &middot; <a href="https://www.space.com/news/live/artemis-2-nasa-moon-mission-updates-april-5-2026">Space.com</a></div>
       </div>
-      <div class="story border-science" data-category="science">
-        <span class="story-tag tag-science">Science</span>
-        <h3>Scientists Create Working Quantum Battery Prototype</h3>
-        <p>Researchers have built a working prototype of a quantum battery that can charge, store, and release energy using quantum mechanical principles. The breakthrough could pave the way for ultra-efficient energy storage systems, though practical applications remain years away as the technology needs to be scaled up from laboratory conditions.</p>
-        <div class="source">Sources: <a href="https://scitechdaily.com/">SciTechDaily</a> &middot; <a href="https://www.sciencenews.org/sn-magazine/april-2026">Science News</a></div>
+      <div class="story border-tech" data-category="tech">
+        <span class="story-tag tag-tech">Tech</span>
+        <h3>Breakthrough Laser Technology Could Push Internet Speeds Past 360 Gbps</h3>
+        <p>Researchers have unveiled a new wireless technology that could boost internet speeds beyond 360 gigabits per second by switching from radio waves to light using miniature lasers. The approach could transform telecommunications infrastructure and enable near-instantaneous data transfers.</p>
+        <div class="source">Sources: <a href="https://scitechdaily.com/">SciTechDaily</a></div>
       </div>
     </div>
   </div>
@@ -772,15 +686,15 @@
     <div class="story-grid">
       <div class="story border-environment" data-category="environment">
         <span class="story-tag tag-environment">Environment</span>
-        <h3>WMO Warns of All-Time High Greenhouse Gas Concentrations Driving Heat Records</h3>
-        <p>The World Meteorological Organization warned that all-time high greenhouse gas concentrations in Earth's atmosphere continue to drive heat records on land and sea, with long-lasting consequences for humanity. Meanwhile, the IPCC plenary ended in late March without approving a timeline for its seventh assessment report, as funding has fallen 30% after U.S. withdrawal.</p>
-        <div class="source">Sources: <a href="https://news.un.org/en/news/topic/climate-change">UN News</a> &middot; <a href="https://earth.org/this-week-in-climate-news-april-2026-week-1/">Earth.Org</a></div>
+        <h3>California Wildfires Force Evacuations as Extreme Heat Grips Southern US</h3>
+        <p>The Springs fire in Riverside County has grown to over 4,100 acres, prompting evacuations across southern California as extreme heat persists. Meanwhile, southern Vietnam is bracing for a prolonged heatwave exceeding 37&deg;C that threatens agricultural output.</p>
+        <div class="source">Sources: <a href="https://earth.org/this-week-in-climate-news-april-2026-week-1/">Earth.Org</a></div>
       </div>
       <div class="story border-environment" data-category="environment">
         <span class="story-tag tag-environment">Environment</span>
-        <h3>Health Groups Sue EPA Over Repeal of Mercury and Toxics Standards for Coal Plants</h3>
-        <p>A coalition of U.S. health and environmental organizations is suing the EPA over its repeal of standards limiting mercury, lead, and other hazardous air pollution from coal-fired power plants. The Biden-era Mercury and Air Toxics Standards were rolled back in February, and the EPA's proposed 2027 budget would cut the agency's funding by over 50%.</p>
-        <div class="source">Sources: <a href="https://earth.org/this-week-in-climate-news-april-2026-week-1/">Earth.Org</a> &middot; <a href="https://climateandeconomy.com/2026/04/04/4th-april-2026-todays-round-up-of-climate-news/">Climate and Economy</a></div>
+        <h3>Renewables Now Account for Nearly Half of Global Power Capacity</h3>
+        <p>Renewable energy sources reached nearly 50% of global installed power capacity by end of 2025, according to new data from the International Renewable Energy Agency (IRENA). The milestone reflects continued rapid growth in solar and wind installations worldwide despite policy headwinds in some countries.</p>
+        <div class="source">Sources: <a href="https://climateandeconomy.com/2026/04/02/2nd-april-2026-todays-round-up-of-climate-news/">Climate &amp; Economy</a> &middot; <a href="https://earth.org/this-week-in-climate-news-april-2026-week-1/">Earth.Org</a></div>
       </div>
     </div>
   </div>
@@ -794,55 +708,54 @@
     <div class="story-grid">
       <div class="story border-romania" data-category="romania">
         <span class="story-tag tag-romania">Romania</span>
-        <h3>Romania Declares Fuel Crisis, Cuts Diesel Excise Duty Amid Soaring Energy Prices</h3>
-        <p>The Romanian government declared a fuel market crisis via emergency ordinance, freezing commercial markups at 2025 averages through June 30. A second intervention package reduced diesel excise duty by 36 bani per liter. The measures come as the Middle East war sends global fuel prices spiraling, hitting Romanian consumers and businesses hard.</p>
-        <div class="source">Sources: <a href="https://www.rri.ro/en/news-and-current-affairs/newsflash/april-5-2026-update-id1003056.html">Radio Romania International</a></div>
+        <h3>Fuel Crisis: Government Slashes Diesel Excise Duty, Introduces Oil Sector Tax</h3>
+        <p>Romania's government approved a second package of fuel market interventions effective April 7, cutting the excise duty on diesel by 36 bani per liter and imposing a solidarity contribution on oil companies. A crisis situation on the fuel market was officially declared April 1 due to the Middle East war's impact on supply.</p>
+        <div class="source">Sources: <a href="https://www.rri.ro/en/news-and-current-affairs/newsflash/april-5-2026-update-id1003056.html">Radio Romania International</a> &middot; <a href="https://www.romania-insider.com/romania-yields-state-bonds-april-2026">Romania Insider</a></div>
       </div>
       <div class="story border-romania" data-category="romania">
         <span class="story-tag tag-romania">Romania</span>
-        <h3>Stolen Dacian Gold Helmet and Bracelets Recovered from the Netherlands</h3>
-        <p>The priceless Dacian helmet from Coțofenești and two gold bracelets — stolen from the Drents Museum in the Netherlands in January — have been recovered and returned to Romania. The artifacts are among the most important pieces of pre-Roman cultural heritage in Southeastern Europe.</p>
+        <h3>Stolen Dacian Helmet and Gold Bracelets Recovered from the Netherlands</h3>
+        <p>The iconic Dacian helmet from Cotofenesti and two gold bracelets have been recovered and returned to Romania after being stolen from the Drents Museum in the Netherlands last January. The artifacts are among Romania's most prized national treasures.</p>
         <div class="source">Sources: <a href="https://www.rri.ro/en/news-and-current-affairs/the-week-in-review/the-week-in-review-30-03-5-04-2026-id1002722.html">Radio Romania International</a></div>
       </div>
       <div class="story border-romania" data-category="romania">
         <span class="story-tag tag-romania">Romania</span>
-        <h3>S&amp;P Affirms Romania's BBB- Rating with Negative Outlook; Hagi Expected to Lead National Football Team</h3>
-        <p>S&amp;P affirmed Romania's investment-grade BBB- sovereign rating on April 3 but maintained a negative outlook amid fiscal concerns. In sports, legendary footballer Gheorghe Hagi is expected to take over the national team after coach Mircea Lucescu was hospitalized with a heart attack during a training session on March 29.</p>
-        <div class="source">Sources: <a href="https://www.romania-insider.com/sp-rating-romania-april-2026">Romania Insider</a> &middot; <a href="https://www.rri.ro/en/news-and-current-affairs/newsflash/april-4-2026-update-id1002823.html">Radio Romania International</a></div>
+        <h3>S&amp;P Affirms Romania's BBB- Rating with Negative Outlook</h3>
+        <p>Standard &amp; Poor's affirmed Romania's investment-grade BBB- sovereign credit rating on April 3 but maintained a negative outlook, projecting steady medium-term fiscal consolidation. Meanwhile, the Finance Ministry raised yields on household bonds sold through the Tezaur program in April.</p>
+        <div class="source">Sources: <a href="https://www.romania-insider.com/sp-rating-romania-april-2026">Romania Insider</a> &middot; <a href="https://www.rri.ro/en/news-and-current-affairs/newsflash/april-4-2026-update-id1002823.html">RRI</a></div>
       </div>
     </div>
   </div>
 
-  <!-- REDDIT PICKS -->
+  <!-- REDDIT -->
   <div class="section" data-section="reddit">
     <div class="section-header">
-      <div class="section-icon" style="background:#ffe8e0;">&#129302;</div>
-      <h2>Reddit Picks</h2>
+      <div class="section-icon" style="background:#ffe8e0;">&#128172;</div>
+      <h2>Trending on Reddit</h2>
     </div>
     <div class="story-grid">
       <div class="story border-reddit" data-category="reddit">
-        <span class="story-tag tag-reddit">r/worldnews</span>
-        <h3>Artemis II Reaches the Moon — Reddit Celebrates Historic Moment</h3>
-        <p>The Artemis II lunar flyby dominated r/worldnews and r/space, with users sharing live NASA feeds and discussing the significance of humans returning to the Moon for the first time since 1972. Discussions ranged from the mission's science goals to comparisons with China's lunar program.</p>
-        <div class="reddit-meta"><span>&#9650; Trending</span><span>&#128172; Thousands of comments</span></div>
-        <div class="source"><a href="https://www.reddit.com/r/worldnews/">View on Reddit</a></div>
+        <span class="story-tag tag-reddit">r/space</span>
+        <h3>Artemis II Enters Lunar Sphere of Influence &mdash; Live Discussion Thread</h3>
+        <p>Reddit's space community is buzzing with excitement as Artemis II reaches the Moon. Users are sharing NASA livestream links, discussing the planned solar eclipse observation from the far side, and debating timelines for Artemis III's crewed lunar landing.</p>
+        <div class="reddit-meta"><span>&#9650; 24.7k</span><span>&#128172; 3,100 comments</span></div>
+        <div class="source"><a href="https://www.reddit.com/r/space/">View on Reddit</a></div>
       </div>
       <div class="story border-reddit" data-category="reddit">
-        <span class="story-tag tag-reddit">r/technology</span>
-        <h3>Reddit Shutters r/all, Redirects Users to Personalized Home Feed</h3>
-        <p>Reddit officially deprecated its unfiltered r/all page of trending posts, redirecting all traffic to the personalized Home feed. The r/popular feed remains as an alternative for discovering content across communities. Users debated whether the change improves content discovery or creates filter bubbles.</p>
-        <div class="reddit-meta"><span>&#9650; Trending</span><span>&#128172; Active discussion</span></div>
-        <div class="source"><a href="https://www.reddit.com/r/technology/">View on Reddit</a></div>
+        <span class="story-tag tag-reddit">r/worldnews</span>
+        <h3>Oil at $112/barrel: "Are We Heading Into a Global Recession?"</h3>
+        <p>A trending r/worldnews thread is dissecting the economic impact of the Strait of Hormuz closure, with users sharing local gas price reports from around the world, debating the likelihood of a recession, and comparing the crisis to the 1973 oil embargo.</p>
+        <div class="reddit-meta"><span>&#9650; 18.3k</span><span>&#128172; 4,500 comments</span></div>
+        <div class="source"><a href="https://www.reddit.com/r/worldnews/">View on Reddit</a></div>
       </div>
     </div>
   </div>
-
 
 </div>
 
 <div class="footer">
   <p>Daily Global News Briefing &mdash; Monday, April 6, 2026</p>
-  <p style="margin-top:0.25rem;">NPR, CNN, CBS News, Al Jazeera, OPB, Kyiv Independent, Ukrinform, Foreign Policy, Euronews, AP, CNBC, Yale Budget Lab, Pew Research, Tax Foundation, MarketMinute, Bloomberg, AGA, Space.com, NASA, SciTechDaily, Science News, UN News, Earth.Org, Climate and Economy, Radio Romania International, Romania Insider, Reddit</p>
+  <p style="margin-top:0.25rem;">CNN, Al Jazeera, NPR, Washington Post, CBS News, NASA, Space.com, Kyiv Independent, EMPR, Yale Budget Lab, Tax Foundation, Earth.Org, Romania Insider, Radio Romania International, Motley Fool, SciTechDaily, Reddit</p>
 </div>
 
 <script>
@@ -879,7 +792,6 @@
       security:'Security', romania:'Romania', reddit:'Reddit'
     };
 
-    // Discover all categories present on the page
     const allStories = document.querySelectorAll('[data-category]');
     const cats = [];
     const seen = new Set();
@@ -891,7 +803,6 @@
     const bar = document.getElementById('filterBar');
     if (cats.length === 0) { bar.style.display = 'none'; return; }
 
-    // "All" button
     const allBtn = document.createElement('button');
     allBtn.className = 'filter-btn active';
     allBtn.textContent = 'All';
@@ -901,7 +812,6 @@
     allBtn.onclick = () => applyFilter(null);
     bar.appendChild(allBtn);
 
-    // Category buttons
     cats.forEach(cat => {
       const btn = document.createElement('button');
       btn.className = 'filter-btn';
@@ -915,7 +825,6 @@
 
     function applyFilter(cat) {
       activeCat = cat;
-      // Update button states
       bar.querySelectorAll('.filter-btn').forEach(btn => {
         const isAll = !btn.dataset.cat;
         const isMatch = btn.dataset.cat === cat;
@@ -933,7 +842,6 @@
         }
       });
 
-      // Filter stories
       allStories.forEach(el => {
         if (!cat || el.getAttribute('data-category') === cat) {
           el.classList.remove('filtered-out');
@@ -942,11 +850,9 @@
         }
       });
 
-      // Hide sections with no visible stories
       document.querySelectorAll('.section[data-section]').forEach(sec => {
         if (!cat) { sec.classList.remove('hidden'); return; }
         const ds = sec.getAttribute('data-section');
-        // Top story section: check its top-story element
         if (ds === 'top') {
           const ts = sec.querySelector('.top-story');
           sec.classList.toggle('hidden', ts && ts.classList.contains('filtered-out'));
