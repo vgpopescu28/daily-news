@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World Brief — Morning Edition</title>
+  <style>
+    :root {
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --surface-alt: #f5f5f4;
+      --text: #1c1917;
+      --muted: #6b7280;
+      --border: #e7e5e4;
+      --strong: #1c1917;
+      --dark: #1c1917;
+      --dark-soft: #292524;
+      --shadow: 0 1px 2px rgba(28, 25, 23, 0.05);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --max: 1280px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      margin: 0 0 8px 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 3.3vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .sub {
+      margin: 12px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .header-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(150px, 1fr));
+      gap: 12px;
+      min-width: 320px;
+    }
+
+    .meta-card, .panel, .story, .deeper-card, .watch-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .meta-card {
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      font-size: 14px;
+    }
+
+    .meta-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .meta-value {
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+      gap: 24px;
+    }
+
+    main, aside { min-width: 0; }
+    .stack { display: grid; gap: 24px; }
+
+    .panel {
+      border-radius: var(--radius-xl);
+      padding: 24px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .panel-title {
+      margin: 4px 0 0;
+      font-size: 1.6rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .helper {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 720px;
+    }
+
+    .pill, .toggle-btn {
+      border: 1px solid #d6d3d1;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #44403c;
+      background: #fff;
+      white-space: nowrap;
+    }
+
+    .toggle-btn {
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+
+    .toggle-btn:hover {
+      background: #f5f5f4;
+    }
+
+    .stories {
+      display: grid;
+      gap: 16px;
+    }
+
+    details.story {
+      background: var(--surface-alt);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      transition: 160ms ease;
+    }
+
+    details.story[open] {
+      background: var(--surface);
+    }
+
+    details.story:hover {
+      border-color: #d6d3d1;
+    }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .story-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .story-main {
+      min-width: 0;
+    }
+
+    .story-meta-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .story-index {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: var(--strong);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .tag {
+      border-radius: 999px;
+      background: #e7e5e4;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #44403c;
+    }
+
+    .story-title {
+      font-size: 1.28rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .story-summary {
+      margin: 10px 0 0;
+      color: #44403c;
+    }
+
+    .why-box {
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      padding: 12px 14px;
+      font-size: 14px;
+      color: #44403c;
+    }
+
+    .story-cta {
+      margin-top: 4px;
+      border: 1px solid #d6d3d1;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 12px;
+      color: var(--muted);
+      transition: 160ms ease;
+      flex-shrink: 0;
+    }
+
+    details[open] .story-cta,
+    details[open] .section-cta {
+      background: var(--strong);
+      color: #fff;
+      border-color: var(--strong);
+    }
+
+    .story-details {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: #44403c;
+    }
+
+    .source-line {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .sections {
+      display: grid;
+      gap: 16px;
+    }
+
+    details.section {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .section-name {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .section-intro {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section-items {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    details.item {
+      background: var(--surface-alt);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+
+    .item-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .item-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: #292524;
+    }
+
+    .item-summary {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .item-more {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--muted);
+      font-size: 11px;
+      padding: 6px 10px;
+      white-space: nowrap;
+    }
+
+    .item-details {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 14px;
+      color: #44403c;
+    }
+
+    .deeper-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .deeper-card {
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+
+    .deeper-type {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .deeper-title {
+      margin-top: 8px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .dark-panel {
+      background: var(--dark);
+      color: #fff;
+      border-color: var(--dark);
+    }
+
+    .dark-panel .eyebrow,
+    .dark-panel .muted-dark {
+      color: #d6d3d1;
+    }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .signal-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .signal-label {
+      color: #d6d3d1;
+      font-size: 13px;
+    }
+
+    .signal-value {
+      margin-top: 4px;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .watch-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .watch-card {
+      border-radius: 18px;
+      background: var(--surface-alt);
+      padding: 14px 16px;
+      font-size: 14px;
+      color: #44403c;
+    }
+
+    .logic-copy {
+      margin-top: 16px;
+      display: grid;
+      gap: 14px;
+      font-size: 14px;
+      color: #44403c;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 980px) {
+      .header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .header-meta {
+        min-width: 0;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding: 20px 16px 36px;
+      }
+
+      .panel, .meta-card {
+        padding: 18px;
+      }
+
+      .deeper-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .signal-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .story-top, .section-head, .item-head, .panel-header {
+        flex-direction: column;
+      }
+
+      .story-cta, .section-cta, .item-more {
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div>
+        <p class="eyebrow">Daily briefing</p>
+        <h1>World Brief — Morning Edition</h1>
+        <p class="sub">A personal front page designed to help you understand the day in five minutes, not scroll for fifty.</p>
+      </div>
+
+      <div class="header-meta">
+        <div class="meta-card">
+          <div class="meta-label">Edition date</div>
+          <div class="meta-value">Tuesday, 7 April</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">Stories processed</div>
+          <div class="meta-value">126 sources → 24 selected</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <main class="stack">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">What matters today</p>
+              <h2 class="panel-title">Top stories ranked by importance</h2>
+            </div>
+            <div class="toolbar">
+              <button class="toggle-btn" id="expand-top">Expand all top stories</button>
+              <button class="toggle-btn" id="collapse-top">Collapse all top stories</button>
+            </div>
+          </div>
+
+          <div class="stories" id="top-stories">
+            <details class="story top-story">
+              <summary>
+                <div class="story-top">
+                  <div class="story-main">
+                    <div class="story-meta-line">
+                      <div class="story-index">1</div>
+                      <span class="tag">High impact</span>
+                    </div>
+                    <h3 class="story-title">Global leaders prepare new trade response after overnight tariff move</h3>
+                    <p class="story-summary">Markets opened cautiously as governments signaled countermeasures and investors reassessed supply-chain exposure.</p>
+                    <div class="why-box"><strong>Why it matters:</strong> Could affect equities, inflation expectations, and consumer prices over the next few days.</div>
+                  </div>
+                  <div class="story-cta">Details</div>
+                </div>
+              </summary>
+              <div class="story-details">
+                Governments across multiple regions are evaluating retaliatory measures, while analysts are watching manufacturing, shipping, and consumer sectors for early impact. Traders are treating the move as more than a one-cycle headline because of the possible follow-on policy responses.
+                <div class="source-line">Sources: Reuters · FT · AP</div>
+              </div>
+            </details>
+
+            <details class="story top-story">
+              <summary>
+                <div class="story-top">
+                  <div class="story-main">
+                    <div class="story-meta-line">
+                      <div class="story-index">2</div>
+                      <span class="tag">Geopolitics</span>
+                    </div>
+                    <h3 class="story-title">Ceasefire talks continue as regional pressure increases</h3>
+                    <p class="story-summary">Diplomatic channels remain active, but no final agreement has been announced yet.</p>
+                    <div class="why-box"><strong>Why it matters:</strong> Important for energy prices, risk sentiment, and broader geopolitical stability.</div>
+                  </div>
+                  <div class="story-cta">Details</div>
+                </div>
+              </summary>
+              <div class="story-details">
+                Several actors are pushing for a framework that would lower immediate tensions, but negotiators are still stuck on sequencing and guarantees. The market implication is less about one headline and more about whether a broader de-risking trend can begin.
+                <div class="source-line">Sources: BBC · Al Jazeera · AP</div>
+              </div>
+            </details>
+
+            <details class="story top-story">
+              <summary>
+                <div class="story-top">
+                  <div class="story-main">
+                    <div class="story-meta-line">
+                      <div class="story-index">3</div>
+                      <span class="tag">Technology</span>
+                    </div>
+                    <h3 class="story-title">Major AI company releases new enterprise tools for automation</h3>
+                    <p class="story-summary">The launch focuses on workflow agents, internal search, and stronger admin controls for businesses.</p>
+                    <div class="why-box"><strong>Why it matters:</strong> Signals where enterprise software spending and AI adoption are heading next.</div>
+                  </div>
+                  <div class="story-cta">Details</div>
+                </div>
+              </summary>
+              <div class="story-details">
+                The product update suggests the market is moving beyond experimentation toward measurable internal productivity use cases. For your page design, this is exactly the kind of story that benefits from a short summary first and deeper context only on demand.
+                <div class="source-line">Sources: The Verge · Bloomberg</div>
+              </div>
+            </details>
+
+            <details class="story top-story">
+              <summary>
+                <div class="story-top">
+                  <div class="story-main">
+                    <div class="story-meta-line">
+                      <div class="story-index">4</div>
+                      <span class="tag">Markets</span>
+                    </div>
+                    <h3 class="story-title">European inflation data comes in near expectations</h3>
+                    <p class="story-summary">The reading was close to forecasts, reducing the odds of a near-term surprise from policymakers.</p>
+                    <div class="why-box"><strong>Why it matters:</strong> Useful context for rates, EUR moves, and overall market mood.</div>
+                  </div>
+                  <div class="story-cta">Details</div>
+                </div>
+              </summary>
+              <div class="story-details">
+                Because the number landed near consensus, the bigger story becomes how policymakers frame persistence and timing. That means the article can stay collapsed by default, since this is a context-heavy story rather than an urgent one.
+                <div class="source-line">Sources: ECB Watch · Reuters</div>
+              </div>
+            </details>
+
+            <details class="story top-story">
+              <summary>
+                <div class="story-top">
+                  <div class="story-main">
+                    <div class="story-meta-line">
+                      <div class="story-index">5</div>
+                      <span class="tag">Science</span>
+                    </div>
+                    <h3 class="story-title">Breakthrough drug trial results draw attention from regulators</h3>
+                    <p class="story-summary">Preliminary results suggest improved outcomes, though experts want larger follow-up studies.</p>
+                    <div class="why-box"><strong>Why it matters:</strong> Could matter for healthcare stocks and medical treatment options later this year.</div>
+                  </div>
+                  <div class="story-cta">Details</div>
+                </div>
+              </summary>
+              <div class="story-details">
+                The important nuance is that early enthusiasm often gets revised once broader datasets arrive. For a briefing page, this kind of extra nuance belongs behind an expand toggle, not in the default visible layer.
+                <div class="source-line">Sources: Nature · STAT</div>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Coverage by topic</p>
+              <h2 class="panel-title">Browse the rest of the briefing</h2>
+              <p class="helper">Each topic stays collapsed by default so the page remains clean and fast to scan.</p>
+            </div>
+            <div class="toolbar">
+              <button class="toggle-btn" id="expand-sections">Expand all sections</button>
+              <button class="toggle-btn" id="collapse-sections">Collapse all sections</button>
+            </div>
+          </div>
+
+          <div class="sections" id="sections">
+            <details class="section topic-section">
+              <summary>
+                <div class="section-head">
+                  <div>
+                    <h3 class="section-name">Geopolitics</h3>
+                    <p class="section-intro">International developments with the highest policy and security relevance.</p>
+                  </div>
+                  <div class="story-cta section-cta">Expand</div>
+                </div>
+              </summary>
+              <div class="section-items">
+                <details class="item">
+                  <summary>
+                    <div class="item-head">
+                      <div>
+                        <div class="item-title">New sanctions package discussed by allied governments</div>
+                        <div class="item-summary">Officials are coordinating language and scope, with enforcement details still under discussion.</div>
+                      </div>
+                      <div class="item-more">More</div>
+                    </div>
+                  </summary>
+                  <div class="item-details">This matters because implementation details often decide whether sanctions are symbolic or materially disruptive.</div>
+                </details>
+
+                <details class="item">
+                  <summary>
+                    <div class="item-head">
+                      <div>
+                        <div class="item-title">Election coalition talks remain unresolved after close result</div>
+                        <div class="item-summary">Negotiations continue with several viable combinations still on the table.</div>
+                      </div>
+                      <div class="item-more">More</div>
+                    </div>
+                  </summary>
+                  <div class="item-details">The outcome may affect fiscal policy, regulatory stance, and relations with regional partners.</div>
+                </details>
+
+                <details class="item">
+                  <summary>
+                    <div class="item-head">
+                      <div>
+                        <div class="item-title">Shipping security concerns raise pressure on trade routes</div>
+                        <div class="item-summary">Rerouting risks are rising for some freight operators.</div>
+                      </div>
+                      <div class="item-more">More</div>
+                    </div>
+                  </summary>
+                  <div class="item-details">This connects directly to insurance costs, delivery times, and imported goods pricing.</div>
+                </details>
+              </div>
+            </details>
+
+            <details class="section topic-section">
+              <summary>
+                <div class="section-head">
+                  <div>
+                    <h3 class="section-name">Business &amp; Markets</h3>
+                    <p class="section-intro">Macro, pricing, and investor sentiment signals worth checking this morning.</p>
+                  </div>
+                  <div class="story-cta section-cta">Expand</div>
+                </div>
+              </summary>
+              <div class="section-items">
+                <details class="item">
+                  <summary>
+                    <div class="item-head">
+                      <div>
+                        <div class="item-title">Oil holds gains while traders watch supply risks</div>
+                        <div class="item-summary">Energy markets remain sensitive to geopolitical headlines and logistics concerns.</div>
+                      </div>
+                      <div class="item-more">More</div>
+                    </div>
+                  </summary>
+                  <div class="item-details">Even a modest move here can reshape the tone of the whole day if inflation expectations begin to shift again.</div>
+                </details>
+
+                <details class="item">
+                  <summary>
+                    <div class="item-head">
+                      <div>
+                        <div class="item-title">Tech earnings expectations revised upward for next quarter</div>
+                        <div class="item-summary">Analysts are becoming more constructive on margin resilience.</div>
+                      </div>
+                      <div class="item-more">More</div>
+                    </div>
+                  </summary>
+                  <div class="item-details">Worth monitoring because it may reinforce the current concentration trade in large-cap names.</div>
+                </details>
+
+                <details class="item">
+                  <summary>
+                    <div class="item-head">
+                      <div>
+                        <div class="item-title">Central bank commentary keeps bond yields in focus</div>
+                        <div class="item-summary">Traders are watching for any change in tone on rates and duration.</div>
+                      </div>
+                      <div class="item-more">More</div>
+                    </div>
+                  </summary>
+                  <div class="item-details">This is the kind of story that should stay concise in default view because it is context rather than a headline shock.</div>
+                </details>
+              </div>
+            </details>
+
+            <details class="section topic-section">
+              <summary>
+                <div class="section-head">
+                  <div>
+                    <h3 class="section-name">Technology &amp; AI</h3>
+                    <p class="section-intro">Product launches, infrastructure bottlenecks, and platform shifts.</p>
+                  </div>
+                  <div class="story-cta section-cta">Expand</div>
+                </div>
+              </summary>
+              <div class="section-items">
+                <details class="item">
+                  <summary>
+                    <div class="item-head">
+                      <div>
+                        <div class="item-title">Open-source model adoption grows among internal enterprise teams</div>
+                        <div class="item-summary">More companies are testing private deployments instead of public-only tools.</div>
+                      </div>
+                      <div class="item-more">More</div>
+                    </div>
+                  </summary>
+                  <div class="item-details">This trend is relevant if you later add a section for enterprise tooling or developer ecosystem signals.</div>
+                </details>
+
+                <details class="item">
+                  <summary>
+                    <div class="item-head">
+                      <div>
+                        <div class="item-title">Chip supply commentary highlights bottlenecks in advanced packaging</div>
+                        <div class="item-summary">Capacity constraints remain a key limiter even when raw demand is strong.</div>
+                      </div>
+                      <div class="item-more">More</div>
+                    </div>
+                  </summary>
+                  <div class="item-details">This matters because AI demand stories increasingly depend on infrastructure delivery, not just model announcements.</div>
+                </details>
+
+                <details class="item">
+                  <summary>
+                    <div class="item-head">
+                      <div>
+                        <div class="item-title">New browser features aim to improve privacy defaults</div>
+                        <div class="item-summary">User protection changes may affect advertisers and analytics practices.</div>
+                      </div>
+                      <div class="item-more">More</div>
+                    </div>
+                  </summary>
+                  <div class="item-details">Lower-importance stories like this benefit a lot from accordion layouts because users can ignore them unless interested.</div>
+                </details>
+              </div>
+            </details>
+
+            <details class="section topic-section">
+              <summary>
+                <div class="section-head">
+                  <div>
+                    <h3 class="section-name">Europe</h3>
+                    <p class="section-intro">Regional policy and infrastructure stories that may shape the medium term.</p>
+                  </div>
+                  <div class="story-cta section-cta">Expand</div>
+                </div>
+              </summary>
+              <div class="section-items">
+                <details class="item">
+                  <summary>
+                    <div class="item-head">
+                      <div>
+                        <div class="item-title">Rail infrastructure funding plan sparks debate in parliament</div>
+                        <div class="item-summary">Competing priorities are emerging around transport modernization.</div>
+                      </div>
+                      <div class="item-more">More</div>
+                    </div>
+                  </summary>
+                  <div class="item-details">A good example of a story that is relevant but not urgent, so the collapsed layer should stay very short.</div>
+                </details>
+
+                <details class="item">
+                  <summary>
+                    <div class="item-head">
+                      <div>
+                        <div class="item-title">Energy reserve strategy updated ahead of next season</div>
+                        <div class="item-summary">Authorities are adjusting preparedness assumptions and storage priorities.</div>
+                      </div>
+                      <div class="item-more">More</div>
+                    </div>
+                  </summary>
+                  <div class="item-details">These policy changes tend to matter later, which is exactly why expandable summaries are useful.</div>
+                </details>
+
+                <details class="item">
+                  <summary>
+                    <div class="item-head">
+                      <div>
+                        <div class="item-title">Labor shortage data reshapes migration discussion</div>
+                        <div class="item-summary">New workforce estimates are adding pressure to policy debates.</div>
+                      </div>
+                      <div class="item-more">More</div>
+                    </div>
+                  </summary>
+                  <div class="item-details">This is a high-value contextual story, especially if your future system adds region-specific relevance scoring.</div>
+                </details>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">Worth a deeper read</p>
+          <h2 class="panel-title">Longer context for later</h2>
+          <div class="deeper-grid">
+            <div class="deeper-card">
+              <div class="deeper-type">Analysis</div>
+              <div class="deeper-title">How shipping disruptions are changing insurance pricing</div>
+            </div>
+            <div class="deeper-card">
+              <div class="deeper-type">Analysis</div>
+              <div class="deeper-title">Why enterprise AI budgets are shifting from pilots to operations</div>
+            </div>
+            <div class="deeper-card">
+              <div class="deeper-type">Analysis</div>
+              <div class="deeper-title">The long-term policy question behind Europe’s industrial strategy</div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <aside class="stack">
+        <section class="panel dark-panel">
+          <p class="eyebrow">Quick signals</p>
+          <div class="signal-grid">
+            <div class="signal-card">
+              <div class="signal-label">S&amp;P 500</div>
+              <div class="signal-value">+0.4%</div>
+            </div>
+            <div class="signal-card">
+              <div class="signal-label">BTC</div>
+              <div class="signal-value">68.2k</div>
+            </div>
+            <div class="signal-card">
+              <div class="signal-label">Oil</div>
+              <div class="signal-value">$84.1</div>
+            </div>
+            <div class="signal-card">
+              <div class="signal-label">EUR/USD</div>
+              <div class="signal-value">1.08</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">On the radar</p>
+          <div class="watch-list">
+            <div class="watch-card">US CPI release</div>
+            <div class="watch-card">ECB speech at 13:30</div>
+            <div class="watch-card">NVIDIA supplier guidance</div>
+            <div class="watch-card">Brent crude above key level</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">Design logic</p>
+          <div class="logic-copy">
+            <p>This layout is designed for morning reading: first the most important stories, then grouped context, then optional deeper reading.</p>
+            <p>The page uses typography and spacing as the main visual language so it still looks premium even when the content is auto-generated.</p>
+            <p>It would work very well with your daily aggregation job because every section can be filled programmatically.</p>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    function setOpen(selector, value) {
+      document.querySelectorAll(selector).forEach(el => {
+        el.open = value;
+      });
+    }
+
+    document.getElementById('expand-top').addEventListener('click', () => {
+      setOpen('.top-story', true);
+    });
+
+    document.getElementById('collapse-top').addEventListener('click', () => {
+      setOpen('.top-story', false);
+    });
+
+    document.getElementById('expand-sections').addEventListener('click', () => {
+      setOpen('.topic-section', true);
+    });
+
+    document.getElementById('collapse-sections').addEventListener('click', () => {
+      setOpen('.topic-section', false);
+    });
+  </script>
+</body>
+</html>
